@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: Scimone Ignazio
 Donate link: 
-Tags: Albo Pretorio, spam
+Tags: Albo Pretorio, Codice Amministrazione Digitale, Upload
 Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: 1.0
