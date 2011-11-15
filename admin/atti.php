@@ -57,6 +57,10 @@ switch ($_REQUEST['action']){
 
 function PreApprovazione($id,$ret=''){
 global $wpdb;
+if (!current_user_can('admin_albo')){
+	echo '<div id="message" class="updated"><p>Questa Operazione non ti &egrave; consentita, operazione di pertinenza dell\'amministratore dell\' Albo</p></div>';
+	return;
+}
 if ($ret!=""){
 	$ret=str_replace("%%br%%","<br />",$ret);
 }
@@ -67,7 +71,7 @@ if ($ret!=""){
 	$NumeroOpzione=get_option('opt_AP_NumeroProgressivo');
 echo'
 <div class="wrap nosubsub">
-<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/approva32.png" alt="Icona Approvazione Atto" style="display:inline;float:left;margin-top:10px;"/>
+<img src="'.Albo_URL.'/img/approva32.png" alt="Icona Approvazione Atto" style="display:inline;float:left;margin-top:10px;"/>
 <h2 style="margin-left:40px;">Approvazione Atto</h2>';
 	if ( $ret!="" ) {
 		echo '<div id="message" class="updated"><p>'.$ret.'</p></div>';
@@ -206,13 +210,13 @@ foreach ($righe as $riga) {
 	echo '<tr>
 			<td>	
 				<a href="?page=atti&amp;action=delete-allegato-atto&amp;id='.$riga->IdAllegato.'" rel="'.$riga->TitoloAllegato.'" class="dc">
-					<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/cross.png" alt="Delete" title="Delete" />
+					<img src="'.Albo_URL.'/img/cross.png" alt="Delete" title="Delete" />
 				</a>
 				<a href="?page=atti&amp;action=edit-allegato-atto&amp;id='.$riga->IdAllegato.'" rel="'.$riga->TitoloAllegato.'">
-					<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/edit.png" alt="Edit" title="Edit" />
+					<img src="'.Albo_URL.'/img/edit.png" alt="Edit" title="Edit" />
 				</a>
-				<a href="'.WP_CONTENT_URL.'/plugins/AlboPretorio/allegati/'.basename($riga->Allegato).'" target="_parent">
-						<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/view.png" alt="View" title="View" />
+				<a href="'.Albo_URL.'/allegati/'.basename($riga->Allegato).'" target="_parent">
+						<img src="'.Albo_URL.'/img/view.png" alt="View" title="View" />
 				</a>
 			<td >'.$riga->TitoloAllegato.'</th>
 			<td >'. basename( $riga->Allegato).'</th>
@@ -278,7 +282,7 @@ function Nuovo_atto(){
 	$risultatocategoria=$risultatocategoria[0];
 	echo '
 <div class="wrap nosubsub">
-<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/atti32.png" alt="Icona Nuovo Atto" style="display:inline;float:left;margin-top:10px;"/>
+<img src="'.Albo_URL.'/img/atti32.png" alt="Icona Nuovo Atto" style="display:inline;float:left;margin-top:10px;"/>
 <h2 style="margin-left:40px;">Nuovo Atto</h2>
 <br class="clear" />
 <div id="col-container">
@@ -349,7 +353,7 @@ $atto=ap_get_atto($id);
 $atto=$atto[0];
 	echo '
 <div class="wrap nosubsub">
-<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/atti32.png" alt="Icona Nuovo Atto" style="display:inline;float:left;margin-top:10px;"/>
+<img src="'.Albo_URL.'/img/atti32.png" alt="Icona Nuovo Atto" style="display:inline;float:left;margin-top:10px;"/>
 <h2 style="margin-left:40px;">Modifica Atto</h2>
 <br class="clear" />
 <div id="col-container">
@@ -420,9 +424,10 @@ function Allegati_atto($IdAtto,$messaggio="",$IdAllegato=0){
 	$risultato=$risultato[0];
 	$risultatocategoria=ap_get_categoria($risultato->IdCategoria);
 	$risultatocategoria=$risultatocategoria[0];
+	$dirUpload =  stripslashes(get_option('opt_AP_FolderUpload'));
 	echo '
 <div class="wrap nosubsub">
-<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/view32.png" alt="Icona Visualizza Atto" style="display:inline;float:left;margin-top:10px;"/>';
+<img src="'.Albo_URL.'/img/view32.png" alt="Icona Visualizza Atto" style="display:inline;float:left;margin-top:10px;"/>';
 	if ( $messaggio!="" ) {
 	 	$messaggio=str_replace("%%br%%", "<br />", $messaggio);
 		echo '<div id="message" class="updated"><p>'.$messaggio.'</p></div>';
@@ -483,13 +488,13 @@ if ($IdAllegato!=0){
 		echo '<tr>
 				<td>	
 					<a href="?page=atti&amp;action=delete-allegato-atto&amp;idAllegato='.$riga->IdAllegato.'&amp;idAtto='.$IdAtto.'&amp;Allegato='.$riga->TitoloAllegato.'" rel="'.$riga->TitoloAllegato.'" class="da">
-						<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/cross.png" alt="Delete" title="Delete" />
+						<img src="'.Albo_URL.'/img/cross.png" alt="Delete" title="Delete" />
 					</a>
 					<a href="?page=atti&amp;action=edit-allegato-atto&amp;id='.$IdAtto.'&amp;idAlle='.$riga->IdAllegato.'" rel="'.$riga->TitoloAllegato.'">
-						<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/edit.png" alt="Edit" title="Edit" />
+						<img src="'.Albo_URL.'/img/edit.png" alt="Edit" title="Edit" />
 					</a>
-					<a href="'.WP_CONTENT_URL.'/plugins/AlboPretorio/allegati/'.basename($riga->Allegato).'" target="_parent">
-							<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/view.png" alt="View" title="View" />
+					<a href="'.$Albo_URL .'/allegati/'.basename($riga->Allegato).'" target="_parent">
+							<img src="'.Albo_URL.'/img/view.png" alt="View" title="View" />
 					</a>
 				<td >'.$riga->TitoloAllegato.'</th>
 				<td >'. basename( $riga->Allegato).'</th>
@@ -555,7 +560,7 @@ function View_atto($IdAtto){
 	$risultatocategoria=$risultatocategoria[0];
 	echo '
 <div class="wrap nosubsub">
-<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/view32.png" alt="Icona Visualizza Atto" style="display:inline;float:left;margin-top:10px;"/>
+<img src="'.Albo_URL.'/img/view32.png" alt="Icona Visualizza Atto" style="display:inline;float:left;margin-top:10px;"/>
 <h2 style="margin-left:40px;">Atto</h2>
 <br class="clear" />
 <div id="col-container">
@@ -701,23 +706,26 @@ if ($Msg_op!=""){
 	        	<td style="width:75px;">';
 		if ($NumeroAtto==0 )
 			echo'	<a href="?page=atti&amp;action=delete-atto&amp;id='.$riga->IdAtto.'" rel="'.$riga->Oggetto.'" tag="" class="ac">
-						<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/cross.png" alt="Delete" title="Delete" />
+						<img src="'.Albo_URL.'/img/cross.png" alt="Delete" title="Delete" />
 					</a>
 					<a href="?page=atti&amp;action=edit-atto&amp;id='.$riga->IdAtto.'" ">
-						<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/edit.png" alt="Edit" title="Edit" />
+						<img src="'.Albo_URL.'/img/edit.png" alt="Edit" title="Edit" />
 					</a>
 					<a href="?page=atti&amp;action=allegati-atto&amp;id='.$riga->IdAtto.'" ">
-						<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/up.png" alt="Edit" title="Allegati" />
+						<img src="'.Albo_URL.'/img/up.png" alt="Attach" title="Allegati" />
 					</a>';
 		echo '	<a href="?page=atti&amp;action=view-atto&amp;id='.$riga->IdAtto.'"  >
-						<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/view.png" alt="View" title="View" />
+						<img src="'.Albo_URL.'/img/view.png" alt="View" title="View" />
 					</a>
 				</td>
 				<td>';
-		if (($NumeroAtto == 0))
-			echo '<a href="?page=atti&amp;action=approva-atto&amp;id='.$riga->IdAtto.'"  >
-				  <img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/approva32.png" alt="Approva" title="Approva" style="margin-top:-4px;"/>
+		if ($NumeroAtto == 0)
+			if  (current_user_can('admin_albo')){
+				echo '<a href="?page=atti&amp;action=approva-atto&amp;id='.$riga->IdAtto.'"  >
+<img src="'.Albo_URL.'/img/approva32.png" alt="Approva" title="Approva" style="margin-top:-4px;"/>
 					</a>';
+			}else
+				echo "Bozza";
 		else
 			echo "Pub.";		
 		echo '  </td> 

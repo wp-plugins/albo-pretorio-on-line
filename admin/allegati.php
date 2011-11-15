@@ -9,7 +9,7 @@
  */
 ?>
 <div class="wrap">
-<img src="<?php echo WP_CONTENT_URL;?>/plugins/AlboPretorio/img/up32.png" alt="Icona Upload File" style="display:inline;float:left;margin-top:10px;"/>
+<img src="<?php echo Albo_URL;?>/img/up32.png" alt="Icona Upload File" style="display:inline;float:left;margin-top:10px;"/>
 <h2 style="margin-left:40px;">Allegati</h2>
 <br class="clear" />
 <div id="col-container">

@@ -16,8 +16,8 @@ require_once(ABSPATH . 'wp-includes/pluggable.php');
 function ap_head() {
 	global $wp_db_version, $wp_dlm_root;
 	?>
-	<link rel="stylesheet" type="text/css" href="<?php echo WP_CONTENT_URL; ?>/plugins/AlboPretorio/css/epoch_styles.css" />
-	<script type="text/javascript" src="<?php echo WP_CONTENT_URL; ?>/plugins/AlboPretorio/js/epoch_classes.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo Albo_URL; ?>/css/epoch_styles.css" />
+	<script type="text/javascript" src="<?php echo Albo_URL; ?>/js/epoch_classes.js"></script>
 	<script type="text/javascript">
 		var Cal1, Cal2, Cal3; 
 		window.onload = function() {
@@ -256,7 +256,7 @@ class APAdminPanel{
 
 		// Add the admin menu
 		add_action( 'admin_menu', array (&$this, 'add_menu') ); 
-				$role =& get_role( 'amministratore_albo' );
+		$role =& get_role( 'amministratore_albo' );
 
 	}
 

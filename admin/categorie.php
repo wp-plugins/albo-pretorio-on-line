@@ -26,7 +26,7 @@ $messages[8] = __('Impossibile cancellare Categorie che sono collegate ad Atti')
 
 ?>
 <div class="wrap nosubsub">
-<img src="<?php echo WP_CONTENT_URL; ?>/plugins/AlboPretorio/img/categoria32.png" alt="Icona Visualizza Categorie Atti" style="display:inline;float:left;margin-top:10px;"/>
+<img src="<?php echo Albo_URL; ?>/img/categoria32.png" alt="Icona Visualizza Categorie Atti" style="display:inline;float:left;margin-top:10px;"/>
 <h2 style="margin-left:40px;">Categorie Atti</h2>
 
 <?php 
@@ -63,10 +63,10 @@ if ($lista){
 	 $shift=(((int)$riga[2])*30)+5;
 		echo'<li style="text-align:left;padding-left:'.$shift.'px;">
 			<a href="?page=categorie&amp;action=delete-categorie&amp;id='.$riga[0].'" rel="'.$riga[1].'" class="dc">
-			<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/cross.png" alt="Delete" title="Delete" />
+			<img src="'.Albo_URL.'/img/cross.png" alt="Delete" title="Delete" />
 			</a>
 			<a href="?page=categorie&amp;action=edit-categorie&amp;id='.$riga[0].'" rel="'.$riga[1].'">
-			<img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/edit.png" alt="Edit" title="Edit" />
+			<img src="'.Albo_URL.'/img/edit.png" alt="Edit" title="Edit" />
 			</a>
 			('.$riga[0] .') '.$riga[1] .'
 			</li>'; 

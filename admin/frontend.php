@@ -11,6 +11,7 @@ switch ($_REQUEST['action']){
 		 	case 'Filtra':
 		 		Lista_Atti($Parametri,$_REQUEST['anno'], 0,$_REQUEST['oggetto'],$_REQUEST['DataInizio'],$_REQUEST['DataFine']);
 		 		break;
+
 		 	default:
 			 	Lista_Atti($Parametri);
 			 	break;
@@ -66,12 +67,12 @@ function VisualizzaAtto($id){
 foreach ($allegati as $allegato) {
 	echo '<div class="Visallegato">
 			<div style="float:left;display:inline;width: 60px;height:60px;">
-				    <img src="'.WP_CONTENT_URL.'/plugins/AlboPretorio/img/Pdf.png" alt="Icona Visualizza Atto" style="margin-left:10px;margin-top:10px;"/>
+				    <img src="'.Albo_URL.'/img/Pdf.png" alt="Icona Visualizza Atto" style="margin-left:10px;margin-top:10px;"/>
 			</div>
 			<div>
 				<p>
 					'.$allegato->TitoloAllegato.' <br />
-					<a href="'.WP_CONTENT_URL.'/plugins/AlboPretorio/allegati/'.basename($allegato->Allegato).'" target="_parent"">'. basename( $allegato->Allegato).'</a>
+					<a href="'.Albo_URL .'allegati/'.basename($allegato->Allegato).'" target="_parent"">'. basename( $allegato->Allegato).'</a>
 				</p>
 			</div>
 		</div>';
@@ -149,22 +150,25 @@ switch ($Parametri['stato']){
 	}
 	$TotAtti=ap_get_all_atti($Parametri['stato'],$Anno,$Categoria,$Oggetto,$Dadata,$Adata,'',0,0,true);
 	$lista=ap_get_all_atti($Parametri['stato'],$Anno,$Categoria,$Oggetto,$Dadata,$Adata,'',$Da,$A); 
-echo' <div class="Visalbo">
+echo' <div class="Visalbo" >
 	    <h2 >'.$TitoloAtti.'</h2>
 		'.VisualizzaRicerca().'
 		<br class="clear" />';
 	if ($TotAtti>$N_A_pp){
 	    $Para='';
 	    foreach ($_REQUEST as $k => $v){
-			if ($k!="Pag"
-				)$Para.='&'.$k.'='.$v;
+			if ($k!="Pag")
+				if ($Para=='')
+					$Para.=$k.'='.$v;
+				else
+					$Para.='&'.$k.'='.$v;
 		}
 		$Para='?'.substr($Para,1);
 		$Npag=(int)$TotAtti/$N_A_pp;
 		if ($TotAtti%$N_A_pp>0){
 			$Npag++;
 		}
-		echo '  	<div class="tablenav" style="float:right;">
+		echo '  	<div class="tablenav" style="float:right;" id="risultati">
 		<div class="tablenav-pages">
     		<p><strong>N. Atti '.$TotAtti.'</strong>&nbsp;&nbsp; Pagine';
     	if (isset($_REQUEST['Pag']) And $_REQUEST['Pag']>1 ){
@@ -178,11 +182,11 @@ echo' <div class="Visalbo">
 			if ($i==$Pagcur){
 				echo '&nbsp;<span class="page-numbers current">'.$i.'</span>';
 			}else{
-				echo '&nbsp;<a href="'.$Para.'&Pag='.$i.'" class="page-numbers">'.$i.'</a>';		
+				echo '&nbsp;<a href="'.$Para.'&Pag='.$i.'" class="page-numbers" >'.$i.'</a>';		
 			}
 		}
 		$PagSuc=$Pagcur+1;
-	   	if ($Pagcur<$Npag){
+	   	if ($PagSuc<$Npag){
 			echo '&nbsp;<a href="'.$Para.'&Pag='.$PagSuc.'" class="next page-numbers">&raquo;</a>';
 		}
 	echo'			</p>

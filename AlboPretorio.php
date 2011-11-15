@@ -3,7 +3,7 @@
 Plugin Name:Albo Pretorio On line
 Plugin URI: http://localhost
 Description: Plugin utilizzato per la pubblicazione degli atti da inserire nell'albo pretorio dell'ente.
-Version:1.0
+Version:0.1
 Author: Scimone Ignazio
 Author URI: http://www.sisviluppo.info
 License: GPL2
@@ -28,10 +28,13 @@ if ($_GET['update'] == 'true')
 			<p><strong>Impostazioni salvate.</strong></p></div>";
 
 include_once(dirname (__FILE__) .'/functions.inc.php');				/* Various functions used throughout */
+define("Albo_URL",plugin_dir_url(dirname (__FILE__).'/AlboPretorio.php'));
+define("Albo_DIR",dirname (__FILE__));
+
 if (!class_exists('AlboPretorio')) {
  class AlboPretorio {
 	
-	var $version     = '1.0';
+	var $version     = '0.0.1';
 	var $minium_WP   = '3.1';
 	var $options     = '';
 	
@@ -51,6 +54,7 @@ if (!class_exists('AlboPretorio')) {
 
 		// Hook di inizializzazione che registra il punto di avvio del pluggin
 		add_action('init', array('AlboPretorio', 'update_AlboPretorio_settings'));
+
 		if (!is_admin()) 
 			if (!function_exists('albo_styles'))
 				add_action('wp_print_styles', array('AlboPretorio','albo_styles'));
@@ -61,8 +65,7 @@ if (!class_exists('AlboPretorio')) {
 	
 	function head_Front_End() {
 		?>
-		<link rel="stylesheet" type="text/css" href="<?php echo WP_CONTENT_URL; ?>/plugins/AlboPretorio/css/epoch_styles.css" />
-		<script type="text/javascript" src="<?php echo WP_CONTENT_URL; ?>/plugins/AlboPretorio/js/epoch_classes.js"></script>
+		<script type="text/javascript" src="<?php echo Albo_URL; ?>/js/epoch_classes.js"></script>
 		<script type="text/javascript">
 			var Cal1, Cal2; 
 			window.onload = function() {
@@ -70,6 +73,8 @@ if (!class_exists('AlboPretorio')) {
 				Cal2 = new Epoch('cal2','popup',document.getElementById('Calendario2'),false);
 			};
 		</script>
+	
+
 	<?php
 	}
 
@@ -370,12 +375,19 @@ if (!class_exists('AlboPretorio')) {
 	function albo_styles() {
 
         $myStyleUrl = plugins_url('css/style.css', __FILE__); 
-        $myStyleFile = WP_PLUGIN_DIR . '/AlboPretorio/css/style.css';
+        $myStyleFile = Albo_DIR.'/css/style.css';
         if ( file_exists($myStyleFile) ) {
             wp_register_style('AlboPretorio', $myStyleUrl);
             wp_enqueue_style( 'AlboPretorio');
         }
+        $myStyleUrl = plugins_url('css/epoch_styles.css', __FILE__); 
+        $myStyleFile = Albo_DIR.'/css/epoch_styles.css';
+        if ( file_exists($myStyleFile) ) {
+            wp_register_style('AlboPretorioCalendario', $myStyleUrl);
+            wp_enqueue_style( 'AlboPretorioCalendario');
+    	}
     }
+   
 
 }
 	global $AP_OnLine;
