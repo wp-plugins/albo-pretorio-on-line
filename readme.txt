@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: Scimone Ignazio
-Donate link: 
+Donate link: www.sisviluppo.info
 Tags: Albo Pretorio, spam
 Requires at least: 3.0
 Tested up to: 3.2
