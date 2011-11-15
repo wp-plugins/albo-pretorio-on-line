@@ -34,7 +34,7 @@ define("Albo_DIR",dirname (__FILE__));
 if (!class_exists('AlboPretorio')) {
  class AlboPretorio {
 	
-	var $version     = '0.0.1';
+	var $version     = '1.1';
 	var $minium_WP   = '3.1';
 	var $options     = '';
 	
