@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: Scimone Ignazio
 Donate link: www.sisviluppo.info
-Tags: Albo Pretorio, spam
+Tags: Albo Pretorio, Codice Amministrazione Digitale, Upload File
 Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: 1.1
@@ -44,6 +44,9 @@ Answer to foo bar dilemma.
 == Screenshots ==
 
 == Changelog ==
+= 1.1 =
+sistemati i problemi con le icone lato amministrazione
+migiorato lato utente
 
 == Note ==
 
