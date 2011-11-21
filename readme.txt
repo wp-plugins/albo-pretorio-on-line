@@ -30,11 +30,6 @@ dove stato può assumere i seguenti valori
          3 - solo gli atti da pubblicare (per ovvi motivi si scoglia l'uso se non per motivi di test)
 
 per_page indica il numero massimo di atti che vengono visualizza in ogni pagina
-
-== Frequently Asked Questions ==
-non ci sono argomenti
-== Screenshots ==
-nessuna
 == Changelog ==
 1.1
 - sistemati i problemi con le icone lato amministrazione
@@ -43,18 +38,12 @@ nessuna
 - risolti problemi lato utente nella visualizzazione dell'atto, paginazione e filtri
 - lato utente ora viene riportato il ome dell'ente
 - in fase di attivazione viene ora riportato la catrella di Upload http://cartellaplugin/allegati
- 
-== Upgrade Notice ==
+ == Upgrade Notice ==
 Aggiornare sempre il plugin all'ultima versione fini a che non si arriva ad una versione stabile ed operativa
-
 == Note ==
-
 Versione ancora in fase di sviluppo 
 NON UTILIZZARE IN AMBIENTI OPERATIVI
 L'AUTORE NON SI ASSUME NESSUNA RESPONSABILITA' SUL FUNZIONAMENTO DEL PLUGIN
-
 == Usage ==
+Per maggiori informazioni e per assistenza il sito di riferimento e' http://www.sisviluppo.info dove e' attivo anche un forum
 
-Per maggiori informazioni e per assistenza il sito di riferimento è http://www.sisviluppo.info dove e' attivo anche un forum
-
-`<?php code(); // goes in backticks ?>`
