@@ -5,7 +5,7 @@ Tags: Albo Pretorio, Codice Amministrazione Digitale, Upload File
 Requires at least: 3.0
 Tested up to: 3.2
 Stable tag: 1.1
-Albo Pretorio On Line e' un plugin che permette la gestione dell'albo pretorio delle pubbliche amministrazioni italiane in base al nuovo CAD
+Albo Pretorio On Line permette la gestione dell'albo pretorio on line in base al nuovo Codice dell'Amministrazione Digitale
 == Description ==
 
 Albo Pretorio On Line e' un plugin per WordPress che tenta di dare una risposta all'esigenza delle pubbliche amministrazioni di avere a disposizione uno strumento con il quale pubblicare i propri atti in adempimento dell'art. 32 della LEGGE 18 giugno 2009, n. 69 e successive modifiche .
@@ -38,9 +38,14 @@ nessuna
 == Changelog ==
 
 = 1.1 =
-sistemati i problemi con le icone lato amministrazione
+- sistemati i problemi con le icone lato amministrazione
+- migiorato lato utente
 
-migiorato lato utente
+== 1.2 ==
+- risolti problemi lato utente nella visualizzazione dell'atto, paginazione e filtri
+- lato utente ora viene riportato il ome dell'ente
+- in fase di attivazione viene ora riportato la catrella di Upload http://cartellaplugin/allegati
+ 
 == Upgrade Notice ==
 Aggiornare sempre il plugin all'ultima versione fini a che non si arriva ad una versione stabile ed operativa
 
