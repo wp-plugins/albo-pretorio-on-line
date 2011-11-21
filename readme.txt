@@ -44,6 +44,6 @@ Aggiornare sempre il plugin all'ultima versione fini a che non si arriva ad una 
 Versione ancora in fase di sviluppo 
 NON UTILIZZARE IN AMBIENTI OPERATIVI
 L'AUTORE NON SI ASSUME NESSUNA RESPONSABILITA' SUL FUNZIONAMENTO DEL PLUGIN
-== Usage ==
+== Uso ==
 Per maggiori informazioni e per assistenza il sito di riferimento e' http://www.sisviluppo.info dove e' attivo anche un forum
 
