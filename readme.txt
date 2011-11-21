@@ -41,7 +41,7 @@ nessuna
 - sistemati i problemi con le icone lato amministrazione
 - migiorato lato utente
 
-== 1.2 ==
+= 1.2 =
 - risolti problemi lato utente nella visualizzazione dell'atto, paginazione e filtri
 - lato utente ora viene riportato il ome dell'ente
 - in fase di attivazione viene ora riportato la catrella di Upload http://cartellaplugin/allegati
