@@ -51,7 +51,7 @@ $file_show = basename( $file );
 			 <textarea cols="60" rows="20" name="newcontent" id="newcontent">'.$content.'</textarea>';
 		if ( is_writeable( $file ) )
 			echo '<p class="submit">
-	        	<input type="submit" name="AlboPretorio_submit_button" value="Salva Modifiche" />
+	        	<input type="submit" name="SalvaCSS" value="Salva Modifiche" />
 	    	  </p>';
 		else 
 			echo '<p><em>'._e('You need to make this file writable before you can save your changes. See <a href="http://codex.wordpress.org/Changing_File_Permissions">the Codex</a> for more information.').'</em></p>';
