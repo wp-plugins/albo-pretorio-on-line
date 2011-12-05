@@ -259,7 +259,7 @@ if (!class_exists('AlboPretorio')) {
 		</tr>
 		<tr valign="top">
 			<th scope="row"><label for="blogname">Cartella Upload</label></th>
-			<td><input type="text" name="c_dirUpload" value="'.$dirUpload.'" size="80"/><input type="button" value="Valore di Default" onclick="this.form.c_dirUpload.value=\''.addslashes(dirname (__FILE__)) . '/allegati\'"><br />inserire una cartella valida partendo da <strong>'.AP_BASE_DIR.'</strong></td>
+			<td><input type="text" name="c_dirUpload" value="'.$dirUpload.'" size="80"/><input type="button" value="Valore di Default" onclick="this.form.c_dirUpload.value="wp-content/uploads"><br />inserire una cartella valida partendo da <strong>'.AP_BASE_DIR.'</strong></td>
 		</tr>
 		</table>
 	    <p class="submit">
@@ -330,6 +330,9 @@ if (!class_exists('AlboPretorio')) {
 		}
 		if(get_option('opt_AP_FolderUpload' == '') || !get_option('opt_AP_FolderUpload')){
 			add_option('opt_AP_FolderUpload', $dirUpload);
+		}
+		if(get_option('opt_AP_VisualizzaEnte' == '') || !get_option('opt_AP_VisualizzaEnte')){
+			add_option('opt_AP_VisualizzaEnte', 'Si');
 		}
 		if(get_option('opt_AP_EffettiTesto' == '') || !get_option('opt_AP_EffettiTesto')){
 			add_option('opt_AP_EffettiTesto', 'Si');
@@ -453,6 +456,7 @@ if (!class_exists('AlboPretorio')) {
 		    update_option('opt_AP_LivelloTitoloEnte',$_POST['c_LTE'] );
 		    update_option('opt_AP_LivelloTitoloPagina',$_POST['c_LTP'] );
 		    update_option('opt_AP_LivelloTitoloFiltri',$_POST['c_LTF'] );
+		    update_option('opt_AP_FolderUpload',$_POST['c_dirUpload'] );
 			header('Location: '.get_bloginfo('wpurl').'/wp-admin/admin.php?page=config&update=true'); 
   		}
 	}
