@@ -4,7 +4,7 @@ Donate link: www.sisviluppo.info
 Tags: Albo Pretorio, Codice Amministrazione Digitale, Upload File
 Requires at least: 3.0
 Tested up to: 3.2
-Stable tag: 1.4
+Stable tag: 1.5
 Albo Pretorio On Line permette la gestione dell'albo pretorio on line in base al nuovo Codice dell'Amministrazione Digitale
 == Description ==
 
@@ -42,8 +42,18 @@ per_page indica il numero massimo di atti che vengono visualizza in ogni pagina
 - risolto problema cancellazione atto
 = 1.4 =
 - aggiunto l'editor per il file CSS
+= 1.5 =
+- aggiunta la gestione dinamica degli effetti nel front end. Si possono attivare e disattivare gli effetti sul testo e gli effetti di smussamento degli angoli delle tabelle di filtro
+- aggiunta la possibilita' di gestire il livello dei titoli da h2 ad h4 di:
+	- Nome Ente
+	- Titolo Pagina
+	- Titoli aree filtro
+- modificata la gestione della cartella di download, adesso bisogna specificare una cartella del file system partendo dalla cartella root di Wordpress.
  == Upgrade Notice ==
 Aggiornare sempre il plugin all'ultima versione fini a che non si arriva ad una versione stabile ed operativa
+
+Aggiornamento alla versione 1.5:
+Aggiornare in Parametri, la cartella di Upload.
 == Note ==
 Versione ancora in fase di sviluppo 
 NON UTILIZZARE IN AMBIENTI OPERATIVI
