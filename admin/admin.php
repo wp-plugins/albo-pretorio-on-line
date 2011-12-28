@@ -345,7 +345,7 @@ function Memo_allegato_atto(){
 				  if ($_FILES["file"]["error"] > 0){
 					$messages= "Errore: " . $_FILES["file"]["error"];
 		    	}else{
-					$destination_path = get_option('opt_AP_FolderUpload').'/';
+					$destination_path = addslashes(AP_BASE_DIR).get_option('opt_AP_FolderUpload').'/';
 			   		$result = 0;
 			   		UniqueFileName(stripcslashes($destination_path) . basename( $_FILES['file']['name']));
 				   	$target_path = UniqueFileName(stripcslashes($destination_path) . basename( $_FILES['file']['name']));
