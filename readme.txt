@@ -33,7 +33,7 @@ per_page indica il numero massimo di atti che vengono visualizza in ogni pagina
 == Changelog ==
 = 1.7 =
 - <strong>Sistemato</strong> problema di aggiornamento della tabella atti che rendevano impossibile, dopo l'aggiornamento alla versione 1.6, di memorizzare gli atti
-- <strong>Sistemato</strong> problema di impostazione cartella di upload di default, non veniva riportata alcuna cartella, oraviene impostato il valore di wp-content\uploads  
+- <strong>Sistemato</strong> problema di impostazione della cartella di upload di default, non veniva riportata alcuna cartella, oraviene impostato il valore di wp-content\uploads  
 = 1.6 =
 - <strong>Aggiunta</strong> la gestione del responsabile del trattamento, che pu&ograve; essere associato ad ogni atto e visualizzato, quando indicato, insieme ai dati dell'atto
 = 1.5 =
