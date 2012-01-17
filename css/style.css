@@ -1,0 +1,203 @@
+table.tabella-dati-albo{
+	padding: 10;
+	margin: 0;
+	width:90%;
+}
+
+.finestra_ricerca{
+	border: thin outset Black;
+	padding: 3px;
+	background-color: #F4F4F4;
+}
+
+div.ricerca{
+	border: thin solid Black;
+	padding: 5px;
+	font-size: 10px;
+}
+div.ricerca_col_SX{
+	float: left;display: inline;width:64%;
+}
+div.ricerca_col_DX{
+	float:right;width:35%;
+}
+div.ricerca select{
+	font-size: 10px;
+}
+div.ricerca .Titolo{
+	text-align: center;
+	color: Blue;
+	font-size: 12px;
+}
+
+div.Visallegato{
+	width: 100%;
+	border: thin dashed Blue;
+}
+div.Visalbo{
+	width: 100%;
+}
+div.Visalbo h2{
+	font-size: 2em;
+	text-transform: capitalize;
+	color: Blue;
+	text-align: center;
+}
+div.Visalbo h3{
+	font-size: 1.5em;
+	text-transform: capitalize;
+	color: Blue;
+}
+div.Visalbo h4{
+	font-size: 1.1em;
+	text-transform: capitalize;
+	color: Blue;
+}
+.tabVisalbo{
+	width: 100%;
+	clear: both;
+	margin: 0;
+}
+.tabVisalbo td{
+	font-size: 10px;
+	vertical-align: top;
+	border: thin solid Black;
+	background-color: #F3F3F3;
+	padding: 5px;
+	color: Blue;
+}
+
+.tabVisalbo a{
+	text-decoration:none;
+}
+.tabVisalbo th{
+	text-transform: capitalize;
+	text-align: right;
+	font-size: 10px;
+	font-weight: bold;
+	width: 160px;
+	padding-right: 5px;
+}
+.tabVisResp{
+	width: 100%;
+	clear: both;
+	margin: 0;
+}
+.tabVisResp td{
+	font-size: 10px;
+	vertical-align: top;
+	padding: 5px;
+	color: Blue;
+}
+.tabVisResp tr{
+	border: none;
+}
+.tabVisResp th{
+	text-transform: capitalize;
+	text-align: right;
+	font-size: 10px;
+	font-weight: bold;
+	width: 160px;
+	padding-right: 5px;
+}
+.tabVisalbo td{
+	font-size: 10px;
+	vertical-align: top;
+	border: thin solid Black;
+	background-color: #F3F3F3;
+	padding: 5px;
+	color: Blue;
+}
+
+.tabVisalbo a{
+	text-decoration:none;
+}
+.tabVisalbo th{
+	text-transform: capitalize;
+	text-align: right;
+	font-size: 10px;
+	font-weight: bold;
+	width: 160px;
+	padding-right: 5px;
+}
+.tabalbo{
+	border-width: 1px;
+	border-style: solid;
+	border-spacing: 0;
+	width: 100%;
+	clear: both;
+	margin: 0;
+}
+.tabalbo a{
+	text-decoration:none;
+}
+.tabalbo td{
+	font-size: 10px;
+	padding: 4px 4px 4px;
+	vertical-align: top;
+}
+
+.tabalbo thead th{
+	text-transform: capitalize;
+	padding: 4px 4px 4px;
+	text-align: left;
+	line-height: 1.3em;
+	font-size: 12px;
+	font-weight: bold;
+}
+.tabalbo th.FE{
+	text-transform: capitalize;
+	text-align: right;
+	font-size: 10px;
+	font-weight: bold;
+	width: 160px;
+	padding-right: 5px;
+}
+a.pagina:hover {
+	border-color: #999;
+}
+
+a.pagina {
+	height: 20px;
+	width: 50px;
+	background-color: #999;
+}
+.tablenav-pages{
+ 	float:right;
+	display:block;
+	cursor:default;
+	height:30px;
+	line-height:30px;
+	font-size:11px;}
+	
+.tablenav .tablenav-pages a,.tablenav-pages span.current{
+ 	text-decoration:none;
+ 	border:none;
+	padding:3px 6px;
+	border-width:1px;
+	border-style:solid;
+}
+.tablenav{
+ 	margin-right:10px;
+	font-size:12px;
+	font-style:italic;}
+.tablenav .actions{
+ 	padding:2px 8px 0 0;}
+.tablenav .tablenav-pages{
+ 	color:#555;}
+.tablenav .tablenav-pages a{
+ 	border-color:#e3e3e3;
+	background:#eee}
+.tablenav .tablenav-pages a:hover{
+ 	color:#d54e21;
+	border-color:#d54321;}
+.tablenav .tablenav-pages a:active{
+ 	color:#fff!important;}
+.tablenav .tablenav-pages .current{
+ 	background:#dfdfdf;
+	border-color:#d3d3d3;}
+ul.lista{
+	list-style-type:square;
+	font-weight: bold;
+	font-style: italic;
+}
