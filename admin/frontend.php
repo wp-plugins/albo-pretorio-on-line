@@ -337,19 +337,19 @@ echo '	<div class="tabalbo">
 				$sep="&amp;";
 			else
 				$sep="?";
-			echo '<tr '.$classe.'>
-			        <td '.$Annullato.'><a href="'.get_permalink().$sep.'action=visatto&amp;id='.$riga->IdAtto.'"  >'.$NumeroAtto.'/'.$riga->Anno .'</a><br />'.VisualizzaData($riga->Data).'
+			echo '<tr >
+			        <td '.$classe.'><a href="'.get_permalink().$sep.'action=visatto&amp;id='.$riga->IdAtto.'"  >'.$NumeroAtto.'/'.$riga->Anno .'</a><br />'.VisualizzaData($riga->Data).'
 					</td>
-					<td '.$Annullato.'>
+					<td '.$classe.'>
 						'.$riga->Riferimento .'
 					</td>
-					<td '.$Annullato.'>
+					<td '.$classe.'>
 						'.$riga->Oggetto .'  
 					</td>
-					<td '.$Annullato.'>
+					<td '.$classe.'>
 						'.VisualizzaData($riga->DataInizio) .'<br />'.VisualizzaData($riga->DataFine) .'  
 					</td>
-					<td '.$Annullato.'>
+					<td '.$classe.'>
 						'.$cat .'  
 					</td>
 				</tr>'; 
