@@ -1,5 +1,5 @@
 === Plugin Name ===
-Contributors: <a href="http://profiles.wordpress.org/ignazios">Ignazio Scimone</a>
+Contributors: http://profiles.wordpress.org/ignazios Ignazio Scimone
 Tags: Albo Pretorio, Codice Amministrazione Digitale
 Requires at least: 3.0
 Tested up to: 3.5
