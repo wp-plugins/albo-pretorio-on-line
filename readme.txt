@@ -1,7 +1,6 @@
 === Plugin Name ===
-Contributors: Scimone Ignazio
-Donate link: www.sisviluppo.info
-Tags: Albo Pretorio, Codice Amministrazione Digitale, Upload File
+Contributors: <a href="http://profiles.wordpress.org/ignazios">Ignazio Scimone</a>
+Tags: Albo Pretorio, Codice Amministrazione Digitale
 Requires at least: 3.0
 Tested up to: 3.5
 Stable tag: 2.9
