@@ -5,7 +5,7 @@
  * @package Albo Pretorio On line
  * @author Scimone Ignazio
  * @copyright 2011-2014
- * @since 2.9
+ * @since 3.0.1
  */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
@@ -18,18 +18,19 @@ switch ($_REQUEST['action']){
 		break;
 	default: 
 		if (isset($_REQUEST['filtra']))
-		 		Lista_Atti($Parametri,$_REQUEST['categoria'],$_REQUEST['anno'], $_REQUEST['oggetto'],$_REQUEST['DataInizio'],$_REQUEST['DataFine']);
+		 		$ret=Lista_Atti($Parametri,$_REQUEST['categoria'],$_REQUEST['anno'], $_REQUEST['oggetto'],$_REQUEST['DataInizio'],$_REQUEST['DataFine']);
 		else if(isset($_REQUEST['annullafiltro'])){
 				 unset($_REQUEST['categoria']);
 				 unset($_REQUEST['anno']);
 				 unset($_REQUEST['oggetto']);
 				 unset($_REQUEST['DataInizio']);
 				 unset($_REQUEST['DataFine']);
-				 Lista_Atti($Parametri);
+				 $ret=Lista_Atti($Parametri);
 			}else{
-				Lista_Atti($Parametri);
+				$ret=Lista_Atti($Parametri);
 			}
 }
+
 
 function VisualizzaAtto($id){
 	$risultato=ap_get_atto($id);
@@ -62,7 +63,7 @@ echo '
 		</tr>
 		<tr>
 			<th>Data</th>
-			<td style="vertical-align: middle;">'.VisualizzaData($risultato->Data).'</td>
+			<td style="vertical-align: middle;">'.ap_VisualizzaData($risultato->Data).'</td>
 		</tr>
 		<tr>
 			<th>Codice di Riferimento</th>
@@ -74,11 +75,11 @@ echo '
 		</tr>
 		<tr>
 			<th>Data inizio Pubblicazione</th>
-			<td style="vertical-align: middle;">'.VisualizzaData($risultato->DataInizio).'</td>
+			<td style="vertical-align: middle;">'.ap_VisualizzaData($risultato->DataInizio).'</td>
 		</tr>
 		<tr>
 			<th>Data fine Pubblicazione</th>
-			<td style="vertical-align: middle;">'.VisualizzaData($risultato->DataFine).'</td>
+			<td style="vertical-align: middle;">'.ap_VisualizzaData($risultato->DataFine).'</td>
 		</tr>
 		<tr>
 			<th>Note</th>
@@ -126,7 +127,7 @@ echo'
 echo '<h3>Allegati</h3>';
 //print_r($_SERVER);
 foreach ($allegati as $allegato) {
- 	switch (ExtensionType($allegato->Allegato)){
+ 	switch (ap_ExtensionType($allegato->Allegato)){
 		case 'pdf':
 			$Estensione="Pdf.png";
 			$Verifica="";
@@ -148,7 +149,7 @@ foreach ($allegati as $allegato) {
 			else
 				$sep="?";
 			if (is_file($allegato->Allegato))
-				echo '        <a href="'.DaPath_a_URL($allegato->Allegato).'" onclick="window.open(this.href,\'_blank\');return false;" class="addstatdw" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" >'. basename( $allegato->Allegato).'</a> ('.Formato_Dimensione_File(filesize($allegato->Allegato)).')'.$Verifica;
+				echo '        <a href="'.ap_DaPath_a_URL($allegato->Allegato).'" onclick="window.open(this.href,\'_blank\');return false;" class="addstatdw" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" >'. basename( $allegato->Allegato).'</a> ('.ap_Formato_Dimensione_File(filesize($allegato->Allegato)).')'.$Verifica;
 			else
 				echo basename( $allegato->Allegato)." File non trovato, il file &egrave; stao cancellato o spostato!";
 echo'				</p>
@@ -161,59 +162,101 @@ echo '
 </div>
 ';	
 }
-function VisualizzaRicerca($Stato=1,$cat=FALSE){
-$anni=ap_get_dropdown_anni_atti('anno','anno','postform','',$_REQUEST['anno'],$Stato); 
-$categorie=ap_get_dropdown_ricerca_categorie('categoria','categoria','postform','',$_REQUEST['categoria'],$Stato); 
-Bonifica_Url();
-if (strpos($_SERVER['REQUEST_URI'],"?")>0)
-	$sep="&amp;";
-else
-	$sep="?";
-$titFiltri=get_option('opt_AP_LivelloTitoloFiltri');
-if ($titFiltri=='')
-	$titFiltri="h3";
-$HTML='<div class="ricerca">
-		<'.$titFiltri.' style="margin-bottom:10px;">Filtri</'.$titFiltri.'>
-		<form id="filtro-atti" action="'.$_SERVER['REQUEST_URI'].'" method="post">
-		<fieldset>';
-		if (strpos($_SERVER['REQUEST_URI'],'page_id')>0){
-			$HTML.= '<input type="hidden" name="page_id" value="'.Estrai_PageID_Url().'" />';
-		}	
-$HTML.= '
-			<table id="tabella-filtro-atti" class="tabella-dati-albo" >';
-if(!$cat){
-	$HTML.= '	
-				<tr>
-					<th scope="row">Categorie</th>
-					<td>'.$categorie.'</td>
-				</tr>';
-}
-$HTML.= '	
-				<tr>
-					<th scope="row">Anno</th>
-					<td>'.$anni.'</td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="oggetto">Oggetto</label></th>
-					<td><input type="text" size="50" maxlength="150" name="oggetto" id ="oggetto" value="'.$_REQUEST['oggetto'].'"/></td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="DataInizio">da Data</label></th>
-					<td><input name="DataInizio" id="Calendario1" type="text" value="'.$_REQUEST['DataInizio'].'" size="12"  /></td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="DataFine">a Data</label></th>
-					<td><input name="DataFine" id="Calendario2" type="text" value="'.$_REQUEST['DataFine'].'" size="12"  /></td>
-				</tr>
-				<tr>
-					<td style="text-align:center;"><input type="submit" name="filtra" id="filtra" class="bottoneFE" value="Filtra"  /></td>
-					<td style="text-align:center;"><input type="submit" name="annullafiltro" id="annullafiltro" class="bottoneFE" value="Annulla Filtro"  /></td>
-				</tr>		
-			</table>
-			</fieldset>
-		</form>
-</div>';	
-return $HTML;
+
+function VisualizzaRicerca($Stato=1,$cat=0){
+	$anni=ap_get_dropdown_anni_atti('anno','anno','postform','',$_REQUEST['anno'],$Stato); 
+	$categorie=ap_get_dropdown_ricerca_categorie('categoria','categoria','postform','',$_REQUEST['categoria'],$Stato); 
+	ap_Bonifica_Url();
+	if (strpos($_SERVER['REQUEST_URI'],"?")>0)
+		$sep="&amp;";
+	else
+		$sep="?";
+	$titFiltri=get_option('opt_AP_LivelloTitoloFiltri');
+	if ($titFiltri=='')
+		$titFiltri="h3";
+	//$HTML='<div class="ricerca">';
+	$HTML='';
+	//		<'.$titFiltri.' style="margin-bottom:10px;">Filtri</'.$titFiltri.'>
+	$HTML.='		<form id="filtro-atti" action="'.$_SERVER['REQUEST_URI'].'" method="post">
+	';
+			if (strpos($_SERVER['REQUEST_URI'],'page_id')>0){
+				$HTML.= '<input type="hidden" name="page_id" value="'.ap_Estrai_PageID_Url().'" />';
+			}	
+	$HTML.= '
+				<table id="tabella-filtro-atti" class="tabella-dati-albo" >';
+/*	if($cat!=0){
+		$HTML.= '				
+					<tr>
+						<th scope="row" >Categorie</th>
+						<td>'.$categorie.'</td>
+					</tr>';
+	}*/
+	$HTML.= '
+					<tr>
+						<th scope="row">Anno</th>
+						<td>'.$anni.'</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="oggetto">Oggetto</label></th>
+						<td><input type="text" size="40" maxlength="150" name="oggetto" id ="oggetto" value="'.$_REQUEST['oggetto'].'"/></td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="DataInizio">da Data</label></th>
+						<td><input name="DataInizio" id="Calendario1" type="text" value="'.$_REQUEST['DataInizio'].'" size="10" id ="DataInizio" /></td>
+					</tr>
+					<tr>
+						<th scope="wor"><label for="DataFine">a Data</label></th>
+						<td><input name="DataFine" id="Calendario2" type="text" value="'.$_REQUEST['DataFine'].'" size="10" id ="DataFine" /></td>
+					</tr>
+					<tr>
+						<td style="text-align:center;"><input type="submit" name="filtra" id="filtra" class="bottoneFE" value="Filtra"  /></td>
+						<td style="text-align:center;"><input type="submit" name="annullafiltro" id="annullafiltro" class="bottoneFE" value="Annulla Filtro"  /></td>
+					</tr>		
+				</table>
+			</form>
+	';
+	$HTMLC='<div id="fe-tabs-container">
+					<ul>
+						<li><a href="#fe-tab-1">Parametri</a></li>';
+	if($cat==0){
+		$HTMLC.='
+						<li><a href="#fe-tab-2">Categorie</a></li>';
+	}
+	$HTMLC.='
+					</ul>
+					<div id="fe-tab-1">';
+	$HTMLC.=$HTML;
+	$lista=ap_get_categorie_gerarchica();
+	$HTMLL='
+	          <div class="ricercaCategoria">
+	              <ul style="list-style-type: none;">';
+	if ($lista){
+		foreach($lista as $riga){
+		 	$shift=(((int)$riga[2])*15);
+	   		$numAtti=ap_num_atti_categoria($riga[0],$Stato);
+		 	if (strpos(get_permalink(),"?")>0)
+		  		$sep="&amp;";
+	   		else
+		   		$sep="?";
+	   		if ($numAtti>0)
+	      		$HTMLL.='               <li style="text-align:left;padding-left:'.$shift.'px;font-weight: bold;"><a href="'.get_permalink().$sep.'filtra=Filtra&amp;categoria='.$riga[0].'"  >'.$riga[1].'</a> '.$numAtti.'</li>'; 
+		}
+	}else{
+		$HTMLL.= '                <li>Nessuna Categoria Codificata</li>';
+	}
+	$HTMLL.='             </ul>
+	          </div>';
+	$HTMLC.= '
+	      </div>';
+	if($cat==0){	
+		$HTMLC.= '
+				<div id="fe-tab-2">'.$HTMLL.'
+					</div>';			
+	}
+	$HTMLC.= '
+				</div>
+	<br class="clear" />';
+	return $HTMLC;
 }
 
 function Lista_Atti($Parametri,$Categoria=0,$Anno=0,$Oggetto='',$Dadata=0,$Adata=0){
@@ -240,7 +283,9 @@ switch ($Parametri['stato']){
 		$Categoria=$Parametri['cat'];
 		$DesCategoria=ap_get_categoria($Categoria);
 		$TitoloAtti.=" Categoria ".$DesCategoria[0]->Nome;
-		$cat=TRUE;
+		$cat=1;
+	}else{
+		$cat=0;
 	}
 	if (!isset($_REQUEST['Pag'])){
 		$Da=0;
@@ -260,17 +305,26 @@ switch ($Parametri['stato']){
 	$coloreAnnullati=get_option('opt_AP_ColoreAnnullati');
 	$colorePari=get_option('opt_AP_ColorePari');
 	$coloreDispari=get_option('opt_AP_ColoreDispari');
-
-echo' <div class="Visalbo">';
+	if($_REQUEST['vf']=="s"){
+		$VisFiltro='<img src="'.Albo_URL.'img/minimize.png" id="maxminfiltro" class="s"/>';
+		$nascondi='';
+	}else{
+		$VisFiltro='<img src="'.Albo_URL.'img/maximize.png" id="maxminfiltro" class="h"/>';
+		$nascondi='<style type="text/css">#fe-tabs-container{display:none;}</style>';
+	}
+$Contenuto='';
+$Contenuto.=' <div class="Visalbo">
+<a name="dati"></a> ';
 if (get_option('opt_AP_VisualizzaEnte')=='Si')
-		echo '<'.$titEnte.' ><span  class="titoloEnte">'.stripslashes(get_option('opt_AP_Ente')).'</span></'.$titEnte.'>';
-echo'<'.$titPagina.'><span  class="titoloPagina">'.$TitoloAtti.'</span></'.$titPagina.'>
-		'.VisualizzaRicerca($Parametri['stato'],$cat).'
-		<br class="clear" />';
-	if ($TotAtti>$N_A_pp){
+		$Contenuto.= '<'.$titEnte.' ><span  class="titoloEnte">'.stripslashes(get_option('opt_AP_Ente')).'</span></'.$titEnte.'>';
+$Contenuto.='<'.$titPagina.'><span  class="titoloPagina">'.$TitoloAtti.'</span></'.$titPagina.'>';
+if (!isset($Parametri['filtri']) Or $Parametri['filtri']=="si")
+	$Contenuto.='<h4>Filtri '.$VisFiltro.'</h4>'.VisualizzaRicerca($Parametri['stato'],$cat,"");
+$Contenuto.=  $nascondi;
+if ($TotAtti>$N_A_pp){
 	    $Para='';
 	    foreach ($_REQUEST as $k => $v){
-			if ($k!="Pag")
+			if ($k!="Pag" and $k!="vf")
 				if ($Para=='')
 					$Para.=$k.'='.$v;
 				else
@@ -280,36 +334,38 @@ echo'<'.$titPagina.'><span  class="titoloPagina">'.$TitoloAtti.'</span></'.$titP
 			$Para="?Pag=";
 		else
 			$Para="?".$Para."&amp;Pag=";
-		$Npag=(int)$TotAtti/$N_A_pp;
+		$Npag=(int)($TotAtti/$N_A_pp);
 		if ($TotAtti%$N_A_pp>0){
 			$Npag++;
 		}
-		echo '  	<div class="tablenav" style="float:right;" id="risultati">
+		$Contenuto.= ' 
+		<div class="tablenav" style="float:right;" id="risultati">
 		<div class="tablenav-pages">
     		<p><strong>N. Atti '.$TotAtti.'</strong>&nbsp;&nbsp; Pagine';
     	if (isset($_REQUEST['Pag']) And $_REQUEST['Pag']>1 ){
 			$Pagcur=$_REQUEST['Pag'];
 			$PagPre=$Pagcur-1;
-			echo '&nbsp;<a href="'.$Para.$PagPre.'" class="next page-numbers">&laquo;</a>';
+				$Contenuto.= '&nbsp;<a href="'.$Para.'1" class="page-numbers" title="Vai alla prima pagina">&laquo;</a>
+&nbsp;<a href="'.$Para.$PagPre.'" class="page-numbers" title="Vai alla pagina precedente">&lsaquo;</a> ';
 		}else{
 			$Pagcur=1;
+			$Contenuto.= '&nbsp;<span class="page-numbers current" title="Sei gi&agrave; nella prima pagina">&laquo;</span>
+&nbsp;<span class="page-numbers current" title="Sei gi&agrave; nella prima pagina">&lsaquo;</span> ';
 		}
-		for($i=1;$i<=$Npag;$i++){
-			if ($i==$Pagcur){
-				echo '&nbsp;<span class="page-numbers current">'.$i.'</span>';
-			}else{
-				echo '&nbsp;<a href="'.$Para.$i.'" class="page-numbers" >'.$i.'</a>';		
-			}
-		}
+		$Contenuto.= '&nbsp;<span class="page-numbers current">'.$Pagcur.'/'.$Npag.'</span>';
 		$PagSuc=$Pagcur+1;
 	   	if ($PagSuc<=$Npag){
-			echo '&nbsp;<a href="'.$Para.$PagSuc.'" class="next page-numbers">&raquo;</a>';
+			$Contenuto.= '&nbsp;<a href="'.$Para.$PagSuc.'" class="page-numbers" title="Vai alla pagina successiva">&rsaquo;</a>
+&nbsp;<a href="'.$Para.$Npag.'" class="page-numbers" title="Vai all\'ultima pagina">&raquo;</a>';
+		}else{
+			$Contenuto.= '&nbsp;<span class="page-numbers current" title="Se nell\'ultima pagina non puoi andare oltre">&rsaquo;</span>
+&nbsp;<span class="page-numbers current" title="Se nell\'ultima pagina non puoi andare oltre">&raquo;</span>';			
 		}
-	echo'			</p>
+	$Contenuto.='			</p>
     	</div>
 	</div>';
 	}		
-echo '	<div class="tabalbo">                                 
+$Contenuto.= '	<div class="tabalbo">                               
 		<table id="elenco-atti" class="tabella-dati-albo" summary="atti validi per riferimento, oggetto e categoria"> 
 	    <caption>Atti</caption>
 		<thead>
@@ -345,7 +401,7 @@ echo '	<div class="tabalbo">
 				$sep="&amp;";
 			else
 				$sep="?";
-			echo '<tr >
+			$Contenuto.= '<tr >
 			        <td '.$classe.'>'.$NumeroAtto.'/'.$riga->Anno .'
 					</td>
 					<td '.$classe.'>
@@ -358,7 +414,7 @@ echo '	<div class="tabalbo">
 						<a href="'.get_permalink().$sep.'action=visatto&amp;id='.$riga->IdAtto.'"  >'.$riga->Oggetto .'</a>  
 					</td>
 					<td '.$classe.'>
-						'.VisualizzaData($riga->DataInizio) .'<br />'.VisualizzaData($riga->DataFine) .'  
+						'.ap_VisualizzaData($riga->DataInizio) .'<br />'.ap_VisualizzaData($riga->DataFine) .'  
 					</td>
 					<td '.$classe.'>
 						'.$cat .'  
@@ -366,16 +422,17 @@ echo '	<div class="tabalbo">
 				</tr>'; 
 			}
 	} else {
-			echo '<tr>
+			$Contenuto.= '<tr>
 					<td colspan="6">Nessun Atto Codificato</td>
 				  </tr>';
 	}
-	echo '
+	$Contenuto.= '
      </tbody>
     </table>';
-echo '</div>';
+$Contenuto.= '</div>';
 	if ($CeAnnullato) 
-		echo '<p>Le righe evidenziate con questo sfondo <span style="background-color: '.$coloreAnnullati.';">&nbsp;&nbsp;&nbsp;</span> indicano Atti Annullati</p>';
-echo '</div><!-- /wrap -->	';
+		$Contenuto.= '<p>Le righe evidenziate con questo sfondo <span style="background-color: '.$coloreAnnullati.';">&nbsp;&nbsp;&nbsp;</span> indicano Atti Annullati</p>';
+$Contenuto.= '</div><!-- /wrap -->	';
+return $Contenuto;
 }
 ?>

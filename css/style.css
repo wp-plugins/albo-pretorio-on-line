@@ -7,13 +7,13 @@ table.tabella-dati-albo{
 
 .finestra_ricerca{
 	border: thin outset Black;
-	padding: 3px;
+	padding: 1px;
 	background-color: #F4F4F4;
 }
 
 div.ricerca{
 	border: thin solid Black;
-	padding: 5px;
+	padding: 2px;
 	font-size: 1em;
 }
 div.ricerca_col_SX{

@@ -1,9 +1,10 @@
 === Plugin Name ===
-Contributors: Ignazios
-Tags: Albo Pretorio, Codice Amministrazione Digitale
-Requires at least: 3.0
-Tested up to: 3.5
-Stable tag: 2.9
+Contributors: Scimone Ignazio
+Donate link: www.sisviluppo.info
+Tags: Albo Pretorio, Codice Amministrazione Digitale, Upload File
+Requires at least: 3.5
+Tested up to: 3.8
+Stable tag: 3.0.1
 Albo Pretorio On Line permette la gestione dell'albo pretorio on line in base al nuovo Codice dell'Amministrazione Digitale
 == Description ==
 
@@ -19,7 +20,7 @@ Di seguito sono riportati i passi necessari per l'installazione del plugin. la p
 1. Scaricare il plugin dal repository di wordpress o dal sito di riferimento
 2. Attivare il plugin dal menu Plugins
 3. Inserire gli atti lato amministrazione
-4. inserire lo shortcode [Albo stato="1" per_page="5" cat="2"]
+4. inserire lo shortcode [Albo stato="1" per_page="5" cat="2" filtri="s"]
 
 <strong>stato</strong> può assumere i seguenti valori
 
@@ -30,7 +31,16 @@ Di seguito sono riportati i passi necessari per l'installazione del plugin. la p
 
 <strong>per_page</strong> indica il numero massimo di atti che vengono visualizza in ogni pagina
 <strong>cat</strong> opzionale l' ID della categoria di cui verranno visualizzati gli atti 
+<strong>cat</strong> opzionale indica se deve essere visualizzata la finestra dei filtri, utili nel caso si utizza lo shortcode nelle pagine dell'Amministrazione Trasparente
 == Changelog ==
+= 3.0 =
+- <strong>Implementato</strong> diritto all'oblio da attivare dopo l'aggiornamento.
+- <strong>Aggiunta</strong> la possibilità di cancellare gli atti dopo la loro scadenza
+- <strong>Modificata</strong> l'interfaccia degli atti, nella lista ora vengono visualizzati separatamente gli atti da pubblicare da quelli pubblicati,
+- <strong>Aggiunta</strong> l'opzione nello shortcode <em>Filtri</em> che permette di escludere dalla pagina la finestra dei filtri
+- <strong>Revisionata</strong> l'interfaccia pubblica del plugin 
+- <strong>Sostituito</strong> il calendario con il plugin di Ajax
+- <strong>Corretti</strong> vari bugs
 = 2.9 =
 - <strong>Aggiunto</strong> elemento (<strong>OPZIONALE</strong>) dello shortcode che permete di specificare la categoria degli atti da visualizzare.
 - <strong>Aggiunto</strong> pulsante, nella barra dell'editor delle pagine e degli articoli, che permette di inserire attraverso la compilazione di un form lo shortcode necessario per la visualizzazione degli atti.
