@@ -38,6 +38,7 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 			var attipp  		 = document.getElementById('AttiPerPagina').value;
 			var categoria 		 = document.getElementById('Categoria').value;
 			var filtri  		 = document.getElementById('Filtri');
+			var minfiltri  		 = document.getElementById('MinFiltri');
 			
 			var tagtext = "[Albo ";
 			tagtext = tagtext + " stato=\"" + stato+ "\"";
@@ -52,6 +53,10 @@ if ( !is_user_logged_in() || !current_user_can('edit_posts') )
 				tagtext = tagtext + " filtri=\"si\"";
 			else
 				tagtext = tagtext + " filtri=\"no\"";
+			if (minfiltri.checked)
+				tagtext = tagtext + " minfiltri=\"no\"";
+			else
+				tagtext = tagtext + " minfiltri=\"si\"";
 			tagtext = tagtext + "]";
 			if(window.tinyMCE) {
 				window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, tagtext);
@@ -87,6 +92,10 @@ $Ele_Cate=ap_get_dropdown_categorie("Categoria","Categoria","","")
 				<p>
 					<label for="Filtri"><strong>Visualizza Filtri</strong></label>
 					<input type="checkbox" name="Filtri" id="Filtri" value="si"/>
+				</p>
+				<p>
+					<label for="MinFiltri"><strong>Finestra Filtri sempre visibile</strong></label>
+					<input type="checkbox" name="MinFiltri" id="MinFiltri" value="si"/>
 				</p>
 		</form>
 	</div>

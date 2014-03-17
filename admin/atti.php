@@ -5,7 +5,7 @@
  * @package Albo Pretorio On line
  * @author Scimone Ignazio
  * @copyright 2011-2014
- * @since 3.0.1
+ * @since 3.0.2
  */
 
 if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You are not allowed to call this page directly.'); }
@@ -710,7 +710,7 @@ foreach ($allegati as $allegato) {
 			if (is_file($allegato->Allegato))
 				echo '        <a href="'.ap_DaPath_a_URL($allegato->Allegato).'" >'. basename( $allegato->Allegato).'</a> ('.ap_Formato_Dimensione_File(filesize($allegato->Allegato)).')'.$Verifica;
 			else
-				echo basename( $allegato->Allegato)." File non trovato, il file &egrave; stao cancellato o spostato!";
+				echo basename( $allegato->Allegato)." File non trovato, il file &egrave; stato cancellato o spostato!";
 echo'				</p>
 			</div>
 			<div style="clear:both;"></div>
@@ -815,7 +815,7 @@ echo'
 		<br class="clear" />
 		<div id="col-container">
 		<div class="col-wrap" style="margin-bottom: 40px;">
-		<h3>Elenco Atti <strong>Da Pubblicati</strong></h3>
+		<h3>Elenco Atti <em>Da Pubblicare</em></h3>
 		<table class="widefat" id="elenco-atti-daapp"> 
 	    <thead>
 	    	<tr>
@@ -884,7 +884,7 @@ echo'
 </div>		
 		
 		<div class="col-wrap">
-		<h3>Elenco Atti <strong>Pubblicati</strong></h3>';
+		<h3>Elenco Atti <em>Pubblicati</em></h3>';
 //Paginazione
 	if ($TotAtti>$N_A_pp){
 	    $Para='';

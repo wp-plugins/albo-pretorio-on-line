@@ -4,7 +4,7 @@ Donate link: www.sisviluppo.info
 Tags: Albo Pretorio, Codice Amministrazione Digitale, Upload File
 Requires at least: 3.5
 Tested up to: 3.8
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 Albo Pretorio On Line permette la gestione dell'albo pretorio on line in base al nuovo Codice dell'Amministrazione Digitale
 == Description ==
 
@@ -20,7 +20,7 @@ Di seguito sono riportati i passi necessari per l'installazione del plugin. la p
 1. Scaricare il plugin dal repository di wordpress o dal sito di riferimento
 2. Attivare il plugin dal menu Plugins
 3. Inserire gli atti lato amministrazione
-4. inserire lo shortcode [Albo stato="1" per_page="5" cat="2" filtri="s"]
+4. inserire lo shortcode [Albo stato="1" per_page="10" cat="1" filtri="si" minfiltri="no"]
 
 <strong>stato</strong> può assumere i seguenti valori
 
@@ -31,9 +31,13 @@ Di seguito sono riportati i passi necessari per l'installazione del plugin. la p
 
 <strong>per_page</strong> indica il numero massimo di atti che vengono visualizza in ogni pagina
 <strong>cat</strong> opzionale l' ID della categoria di cui verranno visualizzati gli atti 
-<strong>cat</strong> opzionale indica se deve essere visualizzata la finestra dei filtri, utili nel caso si utizza lo shortcode nelle pagine dell'Amministrazione Trasparente
+<strong>filtri</strong> opzionale indica se deve essere visualizzata la finestra dei filtri. Se non specificato i filtri vengono visualizzati. utile nel caso si utizza lo shortcode nelle pagine dell'Amministrazione Trasparente
+<strong>minfiltri</strong> opzionale indica se deve essere attivata la minimizzazione della finestra dei filtri. Se non specificato viene attivata la minimizzazione della finestra filtri.
 == Changelog ==
-= 3.0 =
+= 3.0.1 =
+- <strong>Corretti</strong> vari bugs: Errori di validazione Front End, Errore di paginazione
+- <strong>Implementata</strong> opzione nello shortcode che permette di visualizzare la finestra dei filtri fissa come avveniva fino alla versione 2.9
+= 3.0.1 =
 - <strong>Implementato</strong> diritto all'oblio da attivare dopo l'aggiornamento.
 - <strong>Aggiunta</strong> la possibilità di cancellare gli atti dopo la loro scadenza
 - <strong>Modificata</strong> l'interfaccia degli atti, nella lista ora vengono visualizzati separatamente gli atti da pubblicare da quelli pubblicati,
@@ -121,9 +125,8 @@ Aggiornare sempre il plugin all'ultima versione fini a che non si arriva ad una 
 <strong>Aggiornamento alla versione 1.5:
 Aggiornare in Parametri, la cartella di Upload.</strong>
 == Note ==
-Versione in fase di beta test 
 E' consigliato l'uso anche in ambienti operativi, per segnalare errori o problemi di utilizzo usare l'indirizzo email ignazio.scimone@gmail.com segnalando il sito in cui e' installato il plugin, una breve descrizione del problema riscontrato, la persona di riferimento con indirizzo email.
 Non prendo in considerazione richieste non corredate da tutti i dati sopraelencati. 
 == Uso ==
-Per maggiori informazioni e per assistenza il sito di riferimento e' http://www.sisviluppo.info dove e' attivo anche un forum
+Per maggiori informazioni e per assistenza il sito di riferimento e' http://plugin.sisviluppo.info
 
