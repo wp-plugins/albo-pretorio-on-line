@@ -12,7 +12,7 @@
 
  * @copyright 2011-2014
 
- * @since 3.0.2
+ * @since 3.0.3
 
  */
 
@@ -270,7 +270,7 @@ foreach ($allegati as $allegato) {
 
 			$Estensione="firmato.png";
 
-			$Verifica='<br /><a href="http://postecert.poste.it/verificatore/servletverificatorep7m?tipoOp=10" onclick="window.open(this.href,\'_blank\');return false;">Verifica firma con servizio fornito da poste.it</a>';
+			$Verifica='<br /><a href="http://postecert.poste.it/verificatore/servletverificatorep7m?tipoOp=10" onclick="window.open(this.href);return false;">Verifica firma con servizio fornito da poste.it</a>';
 
 			break;
 
@@ -300,7 +300,7 @@ foreach ($allegati as $allegato) {
 
 			if (is_file($allegato->Allegato))
 
-				echo '        <a href="'.ap_DaPath_a_URL($allegato->Allegato).'" onclick="window.open(this.href,\'_blank\');return false;" class="addstatdw" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" >'. basename( $allegato->Allegato).'</a> ('.ap_Formato_Dimensione_File(filesize($allegato->Allegato)).')'.$Verifica;
+				echo '        <a href="'.ap_DaPath_a_URL($allegato->Allegato).'" class="addstatdw" rel="'.get_permalink().$sep.'action=addstatall&amp;id='.$allegato->IdAllegato.'&amp;idAtto='.$id.'" >'. basename( $allegato->Allegato).'</a> ('.ap_Formato_Dimensione_File(filesize($allegato->Allegato)).')'.$Verifica;
 
 			else
 
