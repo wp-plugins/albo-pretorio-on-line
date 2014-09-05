@@ -2,7 +2,7 @@
 Contributors: Scimone Ignazio
 Donate link: www.sisviluppo.info
 Tags: Albo Pretorio, Codice Amministrazione Digitale, Upload File
-Requires at least: 3.5
+Requires at least: 4.0
 Tested up to: 3.9
 Stable tag: 3.0.3
 Albo Pretorio On Line permette la gestione dell'albo pretorio on line in base al nuovo Codice dell'Amministrazione Digitale
