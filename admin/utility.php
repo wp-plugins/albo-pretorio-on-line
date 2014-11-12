@@ -5,7 +5,7 @@
  * @package Albo Pretorio On line
  * @author Scimone Ignazio
  * @copyright 2011-2014
- * @since 3.0.7
+ * @since 3.0.8
  */
 
 
@@ -27,6 +27,12 @@ switch($_REQUEST['action']){
 	case "creafsic":
 		menu(ap_NoIndexNoDirectLink(AP_BASE_DIR.get_option('opt_AP_FolderUpload')));
 		unset($_POST['action']);
+		break;
+	case "posttrasf":
+		$Msg=ap_NoIndexNoDirectLink(AP_BASE_DIR.get_option('opt_AP_FolderUpload'))."<br />";
+		$Msg.=ap_allinea_allegati();
+		unset($_POST['action']);
+		menu($Msg);
 		break;
 	case "BackupData":
 		$Data=date('Ymd_H_i_s');
@@ -51,6 +57,9 @@ switch($_REQUEST['action']){
 	case "oblio":
 		MSGOblio();  
 		break;		
+	case "creaninf":
+		ImplementaNINF();
+		break;
 	case "imploblio":
 		ImplementaOblio();
 		break;
@@ -99,6 +108,16 @@ echo '<div class="wrap">
 			</p>
 		</div>';	
 }
+function ImplementaNINF(){
+	$newPathAllegati=AP_BASE_DIR."AllegatiAttiAlboPretorio";
+	ap_NoIndexNoDirectLink($newPathAllegati);
+	echo'<div id="message" class="updated"> 
+				<p><strong>File .htaccess e index.php necessari per il diritto all\'oblio sono stati ricreati.</strong></p>
+				<p>Operazione terminata&nbsp;&nbsp;
+				<a href="'.home_url().'/wp-admin/admin.php?page=Albo_Pretorio" class="add-new-h2 tornaindietro">Torna indietro</a>
+				</p>
+				</div>';
+}
 function ImplementaOblio(){
 	$uploads = wp_upload_dir(); 
 	$oldPathAllegati=substr($uploads['basedir'],0,strpos($uploads['basedir'],"wp-content", 0)).get_option('opt_AP_FolderUpload');
@@ -142,6 +161,8 @@ function ImplementaOblio(){
 }
 
 function menu($Stato="",$passo="",$Data=""){
+$upload_dir = wp_upload_dir();
+$basedir=substr( $upload_dir['basedir'],0,strlen($upload_dir['basedir'])-19);
 echo '<div class="wrap">
 	<img src="'.Albo_URL.'/img/utility.png" alt="Icona Permessi" style="display:inline;float:left;margin-top:5px;"/>
 		<h2 style="margin-left:40px;">Utility Albo</h2>';
@@ -183,6 +204,25 @@ Questa procedura esegue un test generale della procedura e riporta eventuali ano
 </p>
 				<p style="text-align:center;font-size:1.5em;font-weight: bold;">
  					<a href="?page=utilityAlboP&action=verificaproc">Verifica</a>
+				</p>
+		</div>
+				<div class="widefat" style="padding:10px;">
+				<p style="text-align:center;font-size:1.5em;font-weight: bold;">
+				Procedura post trasferimento sito
+				</p>
+				<p style="text-align:left;font-size:1em;font-style: italic;">
+Questa procedura esegue le seguenti operazioni:
+					<ul style="list-style: circle inside;">
+						<li>Aggiornamento dei file 
+							<ul style="list-style: disc inside;padding-left:10px;">
+								<li><span style="font-weight: bold;">.htaccess</span> e <span style="font-weight: bold;">index.php</span> nella cartella <span style="font-style: italic;font-weight: bold;"> '.AP_BASE_DIR.'AllegatiAttiAlboPretorio</span></li>
+								<li> <span style="font-weight: bold;">robots.txt</span> nella cartella <span style="font-style: italic;font-weight: bold;">'.$basedir.'</span></li>
+							</ul>
+							 per il diritto all\'oblio</li>
+						<li>Aggiornamento del percorso nella tabella degli allegati nel Data Base</li>
+					</ul>
+				<p style="text-align:center;font-size:1.5em;font-weight: bold;">
+ 					<a href="?page=utilityAlboP&action=posttrasf">Avvia operazione</a>
 				</p>
 		</div>';
 $elenco="<option value='' selected='selected'>Nessuno</option>";
@@ -664,10 +704,8 @@ echo '
 							<th style="text-align:left;width:440px;">Cartella</th>
 							<th style="text-align:left;width:80px;">.htaccess</th>
 							<th style="text-align:left;width:80px;">index.php</th>
-							<th style="text-align:left;width:80px;">robots.txt</th>';
-if (!$ob1 or !$ob2 or !$ob3)
-echo '
-							<th style="text-align:left;width:100px;">Attivazione</th>';
+							<th style="text-align:left;width:80px;">robots.txt</th>
+							<th style="text-align:left;width:100px;">Operazione</th>';
 echo'
 						</tr>
 					</thead>
@@ -687,8 +725,8 @@ if($ob2)
 		echo'<img src="'.Albo_URL.'/img/cross.png" alt="Icona Non Verificato" style="display:inline;float:left;"/>';							
 echo '							</td>
 			<td></td>';
-if (!$ob1 or !$ob2)
-echo '							<td><a href="?page=utilityAlboP&amp;action=oblio">Attiva</a></td>';
+//if (!$ob1 or !$ob2)
+echo '							<td><a href="?page=utilityAlboP&amp;action=creaninf">Rigenera</a></td>';
 echo '
 						</tr>
 						<tr>
@@ -701,7 +739,7 @@ if($ob3)
 	else
 		echo'<img src="'.Albo_URL.'/img/cross.png" alt="Icona Non Verificato" style="display:inline;float:left;"/>';							
 echo '							</td>';
-if (!$ob3)
+//if (!$ob3)
 echo '							<td><a href="?page=utilityAlboP&amp;action=Crearobots">Crea</a></td>';
 echo '
 						</tr>

@@ -3,7 +3,7 @@
 Plugin Name:Albo Pretorio On line
 Plugin URI: http://plugin.sisviluppo.info
 Description: Plugin utilizzato per la pubblicazione degli atti da inserire nell'albo pretorio dell'ente.
-Version:3.0.7
+Version:3.0.8
 Author: Scimone Ignazio
 Author URI: http://plugin.sisviluppo.info
 License: GPL2
@@ -327,7 +327,7 @@ function add_albo_plugin($plugin_array) {
 					}
 				}); //close jQuery.ajax
 				return false;
-			}),
+			})
 		 });
 		})(jQuery);
 </script>	

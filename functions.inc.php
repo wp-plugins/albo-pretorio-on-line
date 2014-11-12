@@ -2,7 +2,7 @@
 /*
 * Plugin URI: http://www.sisviluppo.info
 * Description: Widget utilizzato per la pubblicazione degli atti da inserire nell'albo pretorio dell'ente.
-* Version:3.0.7
+* Version:3.0.8
 * Author: Scimone Ignazio
 * Author URI: http://www.sisviluppo.info
 */
@@ -13,7 +13,6 @@ if(preg_match('#' . basename(__FILE__) . '#', $_SERVER['PHP_SELF'])) { die('You 
 // Funzioni 
 ################################################################################
 function ap_get_fileperm($dir){
-		 
 	$perms = fileperms($dir);
 	if (($perms & 0xC000) == 0xC000) {
 	    // Socket
@@ -1523,6 +1522,27 @@ function ap_sposta_allegati($OldPathAllegati,$eliminareOrigine=FALSE){
 	$fpmsg = @fopen(Albo_DIR."/BackupDatiAlbo/tmp/msg.txt", "wb");
 	fwrite($fpmsg,$msg);
 	fclose($fpmsg);
+}
+
+function ap_allinea_allegati(){
+	global $wpdb;
+	$msg="";
+	$allegati=$wpdb->get_results("SELECT * FROM $wpdb->table_name_Allegati ;",ARRAY_A );
+// Nuova directory Allegati Albo Pretorio
+	$BaseCurDir=str_replace("\\","/",AP_BASE_DIR.get_option('opt_AP_FolderUpload'));
+	foreach( $allegati as $allegato){
+		$NewAllegato=$BaseCurDir."/".basename($allegato['Allegato']);
+		if ($wpdb->update($wpdb->table_name_Allegati,
+									array('Allegato' => $NewAllegato),
+									array('IdAllegato' => $allegato['IdAllegato'] ),
+									array('%s'),
+									array('%d'))>0){
+				ap_insert_log(3,9,$allegato['IdAllegato'] ,"{Allegato}==> ".$allegato['Allegato']." spostato in $NewAllegato",0);
+				$msg.='<spam style="color:green;">Aggiornamento Link Allegato</spam> '.$allegato['Allegato']."%%br%%";
+			}
+//	echo "<p>Sql==".$wpdb->last_query ."    Ultimo errore==".$wpdb->last_error."</p>";
+	}
+	return $msg;
 }
 
 ################################################################################
