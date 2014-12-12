@@ -2,7 +2,7 @@
 /*
 * Plugin URI: http://www.sisviluppo.info
 * Description: Widget utilizzato per la pubblicazione degli atti da inserire nell'albo pretorio dell'ente.
-* Version:3.0.9
+* Version:3.1
 * Author: Scimone Ignazio
 * Author URI: http://www.sisviluppo.info
 */
@@ -1935,7 +1935,7 @@ global $wpdb;
 	$DirLog=$Dir."/log";
 	$DirAllegati=str_replace("\\","/",AP_BASE_DIR.get_option('opt_AP_FolderUpload'));
 	$ControlloDir="";
-	require_once('inc/pclzip.lib.php');
+	require_once('inc/pclzip.php');
 	if ($Tipo==""){
 			$nomefileZip=$Dir."/".$NomeFile.".zip";
 			$nomefileLog=$DirLog."/Backup_AlboPretorio_".$NomeFile.".log";

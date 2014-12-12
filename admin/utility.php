@@ -5,7 +5,7 @@
  * @package Albo Pretorio On line
  * @author Scimone Ignazio
  * @copyright 2011-2014
- * @since 3.0.9
+ * @since 3.1
  */
 
 
@@ -686,7 +686,7 @@ echo '<div class="wrap">
 						<tr>
 							<td>PclZip</td>
 							<td>';
-if (is_file(Albo_DIR.'/inc/pclzip.lib.php')) 
+if (is_file(Albo_DIR.'/inc/pclzip.php')) 
  		echo'<img src="'.Albo_URL.'/img/verificato.png" alt="Icona Verificato" style="display:inline;float:left;"/></td><td>--</td>';
 	else
 		echo'<img src="'.Albo_URL.'/img/cross.png" alt="Icona Non Verificato" style="display:inline;float:left;"/></td>

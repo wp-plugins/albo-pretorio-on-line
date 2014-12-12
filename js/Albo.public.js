@@ -11,9 +11,8 @@ jQuery.noConflict();
 				jQuery.ajax({type: 'get',url: $(this).attr('rel')}); //close jQuery.ajax
 			return true;		 
 		});
-				
 		$('#elenco-atti').dataTable( {
-          dom: 'T<"clear">lfrtip',
+           dom: 'T<"clear">lfrtip',
           order: [[ColOrder, OrdOrder ]],
           tableTools: {
          	"sSwfPath": url,
@@ -38,6 +37,7 @@ jQuery.noConflict();
                 }
 			]
          },
+        responsive: true,
         language:{
 		    "sEmptyTable":     "Nessun dato presente nella tabella",
 		    "sInfo":           "Vista da _START_ a _END_ di _TOTAL_ elementi",

@@ -3,7 +3,7 @@
 Plugin Name:Albo Pretorio On line
 Plugin URI: http://plugin.sisviluppo.info
 Description: Plugin utilizzato per la pubblicazione degli atti da inserire nell'albo pretorio dell'ente.
-Version:3.0.9
+Version:3.1
 Author: Scimone Ignazio
 Author URI: http://plugin.sisviluppo.info
 License: GPL2
@@ -29,8 +29,8 @@ if ($_GET['update'] == 'true')
 	$stato="<div id='setting-error-settings_updated' class='updated settings-error'> 
 			<p><strong>Impostazioni salvate.</strong></p></div>";
 
-include_once(dirname (__FILE__) .'/functions.inc.php');				/* Various functions used throughout */
-include_once(dirname (__FILE__) .'/AlboPretorio.widget.inc');
+include_once(dirname (__FILE__) .'/AlboPretorioFunctions.php');				/* Various functions used throughout */
+include_once(dirname (__FILE__) .'/AlboPretorioWidget.php');
 define("Albo_URL",plugin_dir_url(dirname (__FILE__).'/AlboPretorio.php'));
 define("Albo_DIR",dirname (__FILE__));
 define("APHomePath",substr(plugin_dir_path(__FILE__),0,strpos(plugin_dir_path(__FILE__),"wp-content")-1));
@@ -349,96 +349,108 @@ function add_albo_plugin($plugin_array) {
 				echo "	<meta name='robots' content='noarchive' />
 			<!--HEAD Albo Preotrio On line -->
 			";
-		wp_enqueue_script( 'jquery-ui-datepicker', '', array('jquery'));
-		//wp_enqueue_style( 'jquery.ui.theme', plugins_url( 'css/jquery-ui-custom.css', __FILE__ ) );
-	    wp_enqueue_script( 'my-admin-dtpicker-it', plugins_url('js/jquery.ui.datepicker-it.js', __FILE__ ));
-
-//		wp_enqueue_script( 'Albo-Public', plugins_url('js/Albo.public.js', __FILE__ ));
-
-		wp_enqueue_script( 'AlboP-DataTable', plugins_url('js/jquery.dataTables.js', __FILE__ ), array('jquery' ));
+//		wp_enqueue_script( 'jquery-ui-datepicker', '', array('jquery'));
+//	    wp_enqueue_script( 'my-admin-dtpicker-it', plugins_url('js/jquery.ui.datepicker-it.js', __FILE__ ));
 		wp_enqueue_script( 'AlboP-DataTable-Tools', plugins_url('js/dataTables.tableTools.js', __FILE__ ), array('jquery' ));
-		wp_enqueue_script( 'AlboP-DataTable-Tools-colvis', plugins_url('js/dataTables.colVis.js', __FILE__ ), array('jquery' ));
-
 	    wp_register_style('AlboP_datatable_style' ,plugins_url( 'css/jquery.dataTables.css', __FILE__ ));
 	    wp_enqueue_style('AlboP_datatable_style');   
-	    wp_register_style('AlboP_datatable_style_colvis' ,plugins_url( 'css/dataTables.colVis.css', __FILE__ ));
-	    wp_enqueue_style('AlboP_datatable_style_colvis');   
-
 	    wp_register_style('AlboP_datatable_theme_Tools' ,plugins_url( 'css/dataTables.tableTools.css', __FILE__ ));
 	    wp_enqueue_style('AlboP_datatable_theme_Tools');   
-
-/*	<script type='text/javascript' src='<?php echo plugins_url('js/jquery.dataTables.js', __FILE__ );?>'></script>
-	<script type='text/javascript' src='<?php echo plugins_url('js/dataTables.tableTools.js', __FILE__ );?>'></script>
-	<link rel="stylesheet" href="<?php echo Albo_URL.'css/jquery.dataTables.css';?>" type="text/css" media="screen" />
-	<link rel="stylesheet" href="<?php echo Albo_URL.'css/dataTables.tableTools.css';?>" type="text/css" media="screen" />
-*/
-
-
 ?>	
-	<script type='text/javascript'>
-		jQuery.noConflict();
-		(function($) {
-			$(function() {
-				$('#paginazione').change(function(){
-					location.href=$(this).attr('rel')+$("#paginazione option:selected" ).text();				});
-				$('#Calendario1').datepicker();
-				$('#Calendario2').datepicker();
-				$('a.addstatdw').click(function() {
-					 var link=$(this).attr('rel');
-						jQuery.ajax({type: 'get',url: $(this).attr('rel')}); //close jQuery.ajax
-					return true;		 
-					});
-			    var l = window.location;
-				var url = l.protocol + "//" + l.host +"/"+  l.pathname.split('/')[1]+"/wp-content/plugins/albo-pretorio-on-line/swf/copy_csv_xls_pdf.swf";
-				$('#elenco-atti').dataTable(         
-			   	{
-			   	"ordering": false,
-			   	"dom": 'lT<f>Crtip',
-			   	"colVis": {"label": function ( index, title, th ) {return (index+1) +'. '+ title;}
-            			},
-				"responsive": true,
-			   	"tableTools": {
-		         	"sSwfPath": url,
-		          	"aButtons": [ 
-						{
-		                    "sExtends":    "collection",
-		                    "sButtonText": "Salva",
-		                    "aButtons":    [ "csv", "xls",                 
-		                    {
-		                    	"sExtends": "pdf",
-		                    	"sPdfOrientation": "landscape",
-		                    	"sPdfMessage": "Tabella generata con il plugin Albo Pretorio OnLine."
-		                	},]
-		                }
-					]
-		         },
-			   	"language":{
-				    "sEmptyTable":     "Nessun dato presente nella tabella",
-				    "sInfo":           " _START_-_END_ di _TOTAL_ atti",
-				    "sInfoEmpty":      "Vista da 0 a 0 di 0 atti",
-				    "sInfoFiltered":   "(filtrati da _MAX_ atti totali)",
-				    "sInfoPostFix":    "",
-				    "sInfoThousands":  ",",
-				    "sLengthMenu":     "Visualizza _MENU_ atti",
-				    "sLoadingRecords": "Caricamento...",
-				    "sProcessing":     "Elaborazione...",
-				    "sSearch":         "Cerca:",
-				    "sZeroRecords":    "La ricerca non ha portato alcun risultato.",
-				    "oPaginate": {
-				        "sFirst":      "<<",
-				        "sPrevious":   "<",
-				        "sNext":       ">",
-				        "sLast":       ">>"
-				    },
-				    "oAria": {
-				        "sSortAscending":  ": attiva per ordinare la colonna in ordine crescente",
-				        "sSortDescending": ": attiva per ordinare la colonna in ordine decrescente"
-				    }
-				}
-			   });
+		<style type="text/css" class="init">
+			td.details-control {
+				background: url('<?php echo Albo_URL;?>img/details_open.png') no-repeat center center;
+				cursor: pointer;
+			}
+			tr.shown td.details-control {
+				background: url('<?php echo Albo_URL;?>img/details_close.png') no-repeat center center;
+			}
+		</style>
+	<script type="text/javascript" language="javascript" src="<?php echo Albo_URL;?>js/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" language="javascript" src="<?php echo Albo_URL;?>js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" language="javascript" src="<?php echo Albo_URL;?>js/jquery-ui.js"></script>
+	<script type="text/javascript" language="javascript" src="<?php echo Albo_URL;?>js/jquery.ui.datepicker-it.js"></script>
+	<script type="text/javascript" class="init">
+		function format ( d ) {
+			return '<table cellpadding="1" cellspacing="0" border="0" style="padding-left:5px;font-size:0.9em;font-weight: bold;">'+
+				'<tr>'+
+					'<td style="width:5%;text-align: right;">Ente:</td>'+
+					'<td>'+d[2]+'</td>'+
+				'</tr>'+
+				'<tr>'+
+					'<td style="text-align: right;">Riferimento:</td>'+
+					'<td>'+d[3]+'</td>'+
+				'</tr>'+
+				'<tr>'+
+					'<td style="text-align: right;">Categoria:</td>'+
+					'<td>'+d[6]+'</td>'+
+				'</tr>'+
+			'</table>';
+		}
+
+	$(document).ready(function() {
+	    var l = window.location;
+		var url = "<?php echo site_url(); ?>/wp-content/plugins/albo-pretorio-on-line/swf/copy_csv_xls_pdf.swf";
+		var table = $('#elenco-atti').DataTable( {
+	        "dom": 'lT<f>Crtip',
+			"colVis": {"label": function ( index, title, th ) {return (index+1) +'. '+ title;}},
+		   	"language":{
+			    "sEmptyTable":     "Nessun dato presente nella tabella",
+			    "sInfo":           " _START_-_END_ di _TOTAL_ atti",
+			    "sInfoEmpty":      "Vista da 0 a 0 di 0 atti",
+			    "sInfoFiltered":   "(filtrati da _MAX_ atti totali)",
+			    "sInfoPostFix":    "",
+			    "sInfoThousands":  ",",
+			    "sLengthMenu":     "Visualizza _MENU_ atti",
+			    "sLoadingRecords": "Caricamento...",
+			    "sProcessing":     "Elaborazione...",
+			    "sSearch":         "Cerca:",
+			    "sZeroRecords":    "La ricerca non ha portato alcun risultato.",
+			    "oPaginate": {
+			        "sFirst":      "<<",
+			        "sPrevious":   "<",
+			        "sNext":       ">",
+			        "sLast":       ">>"
+			    },
+			},
+			"tableTools": {
+	         	"sSwfPath": url,
+	          	"aButtons": [ 
+					{
+	                    "sExtends":    "collection",
+	                    "sButtonText": "Salva",
+	                    "aButtons":    [ "csv", "xls"]
+	                }
+				]
+	        }
 		});
-	})(jQuery);
-</script>     
+		
+		// Add event listener for opening and closing details
+		$('#Calendario1').datepicker();
+		$('#Calendario2').datepicker();
+		$('a.addstatdw').click(function() {
+			 var link=$(this).attr('rel');
+				jQuery.ajax({type: 'get',url: $(this).attr('rel')}); //close jQuery.ajax
+			return true;		 
+			});
+		$('#elenco-atti tbody').on('click', 'td.details-control', function () {
+			var tr = $(this).closest('tr');
+			var row = table.row( tr );
+	//alert(row.data());
+			if ( row.child.isShown() ) {
+				// This row is already open - close it
+				row.child.hide();
+				tr.removeClass('shown');
+			}
+			else {
+				// Open this row
+				row.child( format(row.data()) ).show();
+				tr.addClass('shown');
+			}
+		} );
+	} );
+
+	</script>
 <!--FINE HEAD Albo Preotrio On line -->
 <?php		
 		}
@@ -458,7 +470,10 @@ function add_albo_plugin($plugin_array) {
 		'Filtri' => 'si',
 		'MinFiltri' =>'si'
 	), $Parametri));
-	require_once ( dirname (__FILE__) . '/admin/frontend.php' );
+	if(get_option('opt_AP_stileTableFE')=="Table")
+		require_once ( dirname (__FILE__) . '/admin/frontend.php' );
+	else
+		require_once ( dirname (__FILE__) . '/admin/frontenddatatable.php' );
 //		return "Albo Pretorio".$Correnti." ".$Paginazione." ".$per_page." ".$default_order;
 	return $ret;
 	}
@@ -583,6 +598,12 @@ echo '<div  style="margin-left: 10px;">
 	  $colAnnullati=get_option('opt_AP_ColoreAnnullati');
 	  $colPari=get_option('opt_AP_ColorePari');
 	  $colDispari=get_option('opt_AP_ColoreDispari');
+	  $stileTableFE=get_option('opt_AP_stileTableFE');
+	  $selstiletab=" checked='checked' ";
+	  $selstiledatatab="";
+	  if($stileTableFE=="DataTables"){
+	  		$selstiledatatab=" checked='checked' ";
+	  }
 	  if ($visente=="Si")
 	  	$ve_selezionato='checked="checked"';
 	  else
@@ -601,7 +622,7 @@ echo '<div  style="margin-left: 10px;">
 	  <table class="form-table">
 		<tr valign="top">
 			<th scope="row"><label for="nomeente">Nome Ente</label></th>
-			<td><input type="text" name="c_Ente" value="'.$ente.'" size="100" id="nomeente"/></td>
+			<td><input type="text" name="c_Ente" value=\''.$ente.'\' size="100" id="nomeente"/></td>
 		</tr>
 		<tr valign="top">
 			<th scope="row"><label for="visente">Visualizza Nome Ente</label></th>
@@ -660,22 +681,29 @@ echo '<div  style="margin-left: 10px;">
 				<input type="text" id="color" name="color" value="'.$colAnnullati.'" size="5"/>
 			</td>
 		</tr>
-			<th scope="row"><label for="colorpari">Righe Pari</label></th>
+			<th scope="row"><label for="colorp">Righe Pari</label></th>
 			<td> 
 				<input type="text" id="colorp" name="colorp" value="'.$colPari.'" size="5"/>
 			</td>
 		</tr>
 		<tr>
-			<th scope="row"><label for="colordispari">Righe Dispari</label></th>
+			<th scope="row"><label for="colord">Righe Dispari</label></th>
 			<td> 
 				<input type="text" id="colord" name="colord" value="'.$colDispari.'" size="5"/>
 			</td>
+		</tr>
+		<tr>
+			<th scope="row"><label for="stileTableFE">Stile Tabella elenco atti Front End</label></th>
+			<td> 
+				<input type="radio" id="stileTableFET" name="stileTableFE" value="Table" '.$selstiletab.'>Tabella standard<br>
+				<input type="radio" id="stileTableFEDT" name="stileTableFE" value="DataTables" '.$selstiledatatab.'>Jquery Data Tables
+			</td>		
 		</tr>
 		</table>
 	    <p class="submit">
 	        <input type="submit" name="AlboPretorio_submit_button" value="Salva Modifiche" />
 	    </p> 
-   
+   	
 	    </form>
 	    </div>';
 		if(get_option('opt_AP_AnnoProgressivo')!=date("Y")){
@@ -776,6 +804,10 @@ echo '<div  style="margin-left: 10px;">
 		if(get_option('opt_AP_ColoreDispari') == '' || !get_option('opt_AP_ColoreDispari')){
 			add_option('opt_AP_ColoreDispari', '#FFF');
 		}
+		if(get_option('opt_AP_stileTableFE') == '' || !get_option('opt_AP_stileTableFE')){
+			add_option('opt_AP_stileTableFE', 'Table');
+		}
+
 
 /**
 * Eliminazione Opzioni
@@ -911,6 +943,7 @@ echo '<div  style="margin-left: 10px;">
 			update_option('opt_AP_ColoreAnnullati',$_POST['color'] );
 			update_option('opt_AP_ColorePari',$_POST['colorp'] );
 			update_option('opt_AP_ColoreDispari',$_POST['colord'] );
+			update_option('opt_AP_stileTableFE',$_POST['stileTableFE']);
 			header('Location: '.get_bloginfo('wpurl').'/wp-admin/admin.php?page=configAlboP&update=true'); 
   		}
 	}
