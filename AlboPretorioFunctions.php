@@ -1702,7 +1702,7 @@ function ap_get_dropdown_enti($select_name,$id_name,$class,$tab_index_attribute=
 			if ($c->IdEnte==$default){
 				$output .= " selected=\"selected\" ";
 			}
-			$output .=" >$c->Nome</option>\n";
+			$output .=" >".stripslashes($c->Nome)."</option>\n";
 		}
 	}
 	$output .= "</select>\n";

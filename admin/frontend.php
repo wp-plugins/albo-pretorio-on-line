@@ -59,10 +59,6 @@ echo '
 			<td style="vertical-align: middle;">'.$risultato->Numero."/".$risultato->Anno.'</td>
 		</tr>
 		<tr>
-			<th>Data</th>
-			<td style="vertical-align: middle;">'.ap_VisualizzaData($risultato->Data).'</td>
-		</tr>
-		<tr>
 			<th>Codice di Riferimento</th>
 			<td style="vertical-align: middle;">'.stripslashes($risultato->Riferimento).'</td>
 		</tr>
@@ -131,7 +127,7 @@ foreach ($allegati as $allegato) {
 			break;
 		case "p7m":
 			$Estensione="firmato.png";
-			$Verifica='<br /><a href="http://postecert.poste.it/verificatore/servletverificatorep7m?tipoOp=10" onclick="window.open(this.href);return false;">Verifica firma con servizio fornito da poste.it</a>';
+			$Verifica='<br /><a href="http://vol.ca.notariato.it/" onclick="window.open(this.href);return false;">Verifica firma con servizio fornito da Consiglio Nazionale del Notariato</a>';
 			break;
 	}
 	echo '<div class="Visallegato">
@@ -410,7 +406,7 @@ $Contenuto.= '	<div class="tabalbo">
 						'.$riga->Riferimento .'
 					</td>
 					<td '.$classe.'>
-						<a href="'.get_permalink().$sep.'action=visatto&amp;id='.$riga->IdAtto.'"  >'.$riga->Oggetto .'</a>  
+						<a href="'.get_permalink().$sep.'action=visatto&amp;id='.$riga->IdAtto.'"  style="text-decoration: underline;">'.$riga->Oggetto .'</a>  
 					</td>
 					<td '.$classe.'>
 						'.ap_VisualizzaData($riga->DataInizio) .'<br />'.ap_VisualizzaData($riga->DataFine) .'  
