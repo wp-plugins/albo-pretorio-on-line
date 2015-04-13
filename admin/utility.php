@@ -5,7 +5,7 @@
  * @package Albo Pretorio On line
  * @author Scimone Ignazio
  * @copyright 2011-2014
- * @since 3.1.1
+ * @since 3.2
  */
 
 
@@ -70,6 +70,14 @@ switch($_REQUEST['action']){
 	case "creacategorie":
 		CreaCategorie();
 		break;
+	case "svuotalog":
+		$Msg=SvuotaLog(0);
+		menu($Msg);
+		break;
+	case "puliscilog":
+		$Msg=SvuotaLog(11);
+		menu($Msg);
+		break;
 	default:
 		menu();
 }
@@ -92,7 +100,13 @@ echo AP_CreaCategorieBase().'
 			</table>
 		</div>';
 }
-
+function SvuotaLog($Tipo){
+	$NumRow=ap_svuota_log($Tipo);
+	if ($NumRow==0)
+		return ("Non sono state cancellate righe dal file di Log");
+	else
+		return("Log cancellato correttamente, sono state cancellate ".$NumRow." righe");	
+}
 function MSGOblio(){
 echo '<div class="wrap">
 	<img src="'.Albo_URL.'/img/utility.png" style="display:inline;float:left;margin-top:5px;"/>
@@ -161,6 +175,7 @@ function ImplementaOblio(){
 }
 
 function menu($Stato="",$passo="",$Data=""){
+global $wpdb;
 $upload_dir = wp_upload_dir();
 $basedir=substr( $upload_dir['basedir'],0,strlen($upload_dir['basedir'])-19);
 echo '<div class="wrap">
@@ -224,6 +239,27 @@ Questa procedura esegue le seguenti operazioni:
 				<p style="text-align:center;font-size:1.5em;font-weight: bold;">
  					<a href="?page=utilityAlboP&action=posttrasf">Avvia operazione</a>
 				</p>
+		</div>
+		
+		
+		<div class="widefat" style="padding:10px;">
+				<p style="text-align:center;font-size:1.5em;font-weight: bold;">
+				Procedura pulitura file di Log
+				</p>
+				<p style="font-style: italic;font-weight: bold;">Queste procedure possono cancellare una grossa quantit&agrave; di dati, se non si vuole perderli si consiglia di fare un backup del DataBase o della tabella <span style="font-style: normal;">'.$wpdb->table_name_Log.'</span>
+				</p>
+					<ul style="list-style: none;">
+						<li>Questa procedura cancella tutte le registrazioni presenti nel file di log&nbsp;&nbsp;
+							<span style="font-size:1.5em;font-weight: bold;">
+								<a href="?page=utilityAlboP&action=svuotalog">Svuota file di Log</a>
+							</span>
+						</li>
+						<li>Questa procedura cancella tutte le registrazioni di gestione dal file di log mantenendo le statistiche di accesso
+							<span style="font-size:1.5em;font-weight: bold;">
+								<a href="?page=utilityAlboP&action=puliscilog">Pulisci file di Log</a>
+								  </span>
+						</li>
+					</ul>
 		</div>';
 $elenco="<option value='' selected='selected'>Nessuno</option>";
 $elencoExpo="";
@@ -259,6 +295,7 @@ echo '
 						<input type="submit" name="submitExpo" id="submitExpo" class="button" value="Esporta Backup"  />
 					</form>
 				</p>
+				
 			</div>
 	</div>';
 }

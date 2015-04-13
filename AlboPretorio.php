@@ -3,7 +3,7 @@
 Plugin Name:Albo Pretorio On line
 Plugin URI: http://plugin.sisviluppo.info
 Description: Plugin utilizzato per la pubblicazione degli atti da inserire nell'albo pretorio dell'ente.
-Version:3.1.1
+Version:3.2
 Author: Scimone Ignazio
 Author URI: http://plugin.sisviluppo.info
 License: GPL2
@@ -599,6 +599,21 @@ echo '<div  style="margin-left: 10px;">
 	  $colPari=get_option('opt_AP_ColorePari');
 	  $colDispari=get_option('opt_AP_ColoreDispari');
 	  $stileTableFE=get_option('opt_AP_stileTableFE');
+	  $LogOperazioni=get_option('opt_AP_LogOp');
+	  $LOStatoS="";
+	  $LOStatoN=" checked='checked' ";
+	  if($LogOperazioni=="Si"){
+	  		$LOStatoS=" checked='checked' ";
+	  		$LOStatoN="";
+	  }	  
+	  $LogAccessi=get_option('opt_AP_LogAc');
+	  $LOAccessiS="";
+	  $LOAccessiN=" checked='checked' ";
+	  if($LogAccessi=="Si"){
+	  		$LOAccessiS=" checked='checked' ";
+	  		$LOAccessiN="";
+	  }	  
+	  $LogAccessi=get_option('opt_AP_LogAc');
 	  $selstiletab=" checked='checked' ";
 	  $selstiledatatab="";
 	  if($stileTableFE=="DataTables"){
@@ -697,6 +712,20 @@ echo '<div  style="margin-left: 10px;">
 			<td> 
 				<input type="radio" id="stileTableFET" name="stileTableFE" value="Table" '.$selstiletab.'>Tabella standard<br>
 				<input type="radio" id="stileTableFEDT" name="stileTableFE" value="DataTables" '.$selstiledatatab.'>Jquery Data Tables
+			</td>		
+		</tr>
+		<tr>
+			<th scope="row"><label for="LogOperazioni">Abilita il Log sulle Operazioni di gestione degli Oggetti dell\'Albo</label></th>
+			<td> 
+				<input type="radio" id="LogOperazioniSi" name="LogOperazioni" value="Si" '.$LOStatoS.'>Si<br>
+				<input type="radio" id="LogOperazioniNo" name="LogOperazioni" value="No" '.$LOStatoN.'>No
+			</td>		
+		</tr>
+		<tr>
+			<th scope="row"><label for="LogOperazioni">Abilita il Log sulle Visualizzazioni/Download degli atti pubblicati</label></th>
+			<td> 
+				<input type="radio" id="LogAccessiSi" name="LogAccessi" value="Si" '.$LOAccessiS.'>Si<br>
+				<input type="radio" id="LogAccessiNo" name="LogAccessi" value="No" '.$LOAccessiN.'>No
 			</td>		
 		</tr>
 		</table>
@@ -807,8 +836,12 @@ echo '<div  style="margin-left: 10px;">
 		if(get_option('opt_AP_stileTableFE') == '' || !get_option('opt_AP_stileTableFE')){
 			add_option('opt_AP_stileTableFE', 'Table');
 		}
-
-
+		if(get_option('opt_AP_LogOp') == '' || !get_option('opt_AP_LogOp')){
+			add_option('opt_AP_LogOp', 'Si');
+		}
+		if(get_option('opt_AP_LogAc') == '' || !get_option('opt_AP_LogAc')){
+			add_option('opt_AP_LogAc', 'Si');
+		}
 /**
 * Eliminazione Opzioni
 * 
@@ -944,6 +977,8 @@ echo '<div  style="margin-left: 10px;">
 			update_option('opt_AP_ColorePari',$_POST['colorp'] );
 			update_option('opt_AP_ColoreDispari',$_POST['colord'] );
 			update_option('opt_AP_stileTableFE',$_POST['stileTableFE']);
+			update_option('opt_AP_LogOp', $_POST['LogOperazioni']);
+			update_option('opt_AP_LogAc', $_POST['LogAccessi']);
 			header('Location: '.get_bloginfo('wpurl').'/wp-admin/admin.php?page=configAlboP&update=true'); 
   		}
 	}
